@@ -1,19 +1,72 @@
-from app import *
-from database import *
-import streamlit as st
+# Core Pkgs
+import streamlit as st 
+import pandas as pd
+
+# DB Mgmt
+import sqlite3 
+conn = sqlite3.connect('data/world.sqlite')
+c = conn.cursor()
+
+
+# Fxn Make Execution
+def sql_executor(raw_code):
+	c.execute(raw_code)
+	data = c.fetchall()
+	return data 
+
+
+city = ['ID,', 'Name,', 'CountryCode,', 'District,', 'Population']
+country = ['Code,', 'Name,', 'Continent,', 'Region,', 'SurfaceArea,', 'IndepYear,', 'Population,', 'LifeExpectancy,', 'GNP,', 'GNPOld,', 'LocalName,', 'GovernmentForm,', 'HeadOfState,', 'Capital,', 'Code2']
+countrylanguage = ['CountryCode,', 'Language,', 'IsOfficial,', 'Percentage']
+
+
+
+
+def main():
+	st.title("SQLPlayground")
+
+	menu = ["Home","About"]
+	choice = st.sidebar.selectbox("Menu",menu)
+
+	if choice == "Home":
+		st.subheader("HomePage")
+
+		# Columns/Layout
+		col1,col2 = st.beta_columns(2)
+
+		with col1:
+			with st.form(key='query_form'):
+				raw_code = st.text_area("SQL Code Here")
+				submit_code = st.form_submit_button("Execute")
+
+			# Table of Info
+
+			with st.beta_expander("Table Info"):
+				table_info = {'city':city,'country':country,'countrylanguage':countrylanguage}
+				st.json(table_info)
+			
+		# Results Layouts
+		with col2:
+			if submit_code:
+				st.info("Query Submitted")
+				st.code(raw_code)
+
+				# Results 
+				query_results = sql_executor(raw_code)
+				with st.beta_expander("Results"):
+					st.write(query_results)
+
+				with st.beta_expander("Pretty Table"):
+					query_df = pd.DataFrame(query_results)
+					st.dataframe(query_df)
+
+
+	else:
+		st.subheader("About")
+
+
+
+
+
 if __name__ == '__main__':
-
-    zoo_create_table()
-    cust_create_table()
-    ticket_create_table()
-    animal_create_table()
-    emp_create_table()
-    menu = ["Admin"]
-    choice = st.sidebar.selectbox("Menu", menu)
-
-    if choice == "Admin":
-        username = st.sidebar.text_input("User Name")
-        password = st.sidebar.text_input("Password", type='password')
-        # if st.sidebar.button("Login"):
-        if username == 'admin' and password == 'admin':
-            main()
+	main()
