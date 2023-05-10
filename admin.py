@@ -38,14 +38,16 @@ def call_openaiturbo(inpt,source):
 
 
 def main():
+    if "response" not in st.session_state:
+        st.session_state.response =""
+
     st.title("Pragmatic")
 
     promp = st.text_area("Background information")
     if st.button("Generate Answers"):
         response = call_openai(promp)
         # jsonstr = json.loads(response)
-        if "response" not in st.session_state:
-            st.session_state.response = str(response)
+        st.session_state.response = str(response)
         st.write(st.session_state.response)
     conversation = st.empty()
 
