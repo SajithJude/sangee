@@ -1,11 +1,12 @@
 import os
 import streamlit as st
 import openai 
+import json
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def call_openai(source):
-    messages=[{"role": "user", "content": f"You are the Buyer persona represents the following {source} given this information answer the following questions :\n What is this buyer persona’s most important job responsibilities and activities? • What are the top 5 obstacles that would interfere with this buyer persona’s career success? Where would this buyer persona look for information about products like BrandBuilder and other industry trends? • What role with this buyer persona play in the purchase process, would they define the need, evaluate different solutions, make the final purchase decision or some combination of those roles? • What other roles in the company would likely be part of the buying process and decision-making? • Why wouldn’t this buyer persona already have a product like Brandbuilder? • Are there related products that this buyer’s team uses that would need to integrate with Brandbuilder? • What concerns would this buyer have that might keep them from making the purchase decision?   "}]
+    messages=[{"role": "system", "content": f"You are the Buyer persona represents the following {source} given this information answer the following questions :\n What is this buyer persona’s most important job responsibilities and activities? • What are the top 5 obstacles that would interfere with this buyer persona’s career success? Where would this buyer persona look for information about products like BrandBuilder and other industry trends? • What role with this buyer persona play in the purchase process, would they define the need, evaluate different solutions, make the final purchase decision or some combination of those roles? • What other roles in the company would likely be part of the buying process and decision-making? • Why wouldn’t this buyer persona already have a product like Brandbuilder? • Are there related products that this buyer’s team uses that would need to integrate with Brandbuilder? • What concerns would this buyer have that might keep them from making the purchase decision? \n the response should be a valid json list with the questions and the answers "}]
     # if "messages" not in st.session_state:
     #     st.session_state.messages = [{"role": "user", "content": f"You are the Buyer persona represents the following {} "}]
     # st.session_state.messages.append(message)
@@ -40,7 +41,8 @@ def main():
     promp = st.text_area("Background information")
     if st.button("Generate Answers"):
         response = call_openai(promp)
-        st.write(response)
+        jsonstr = json.loads(response)
+        st.write(jsonstr)
     conversation = st.empty()
 
     user_input = st.text_input("You:")
