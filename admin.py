@@ -43,8 +43,8 @@ def main():
 
     st.title("Pragmatic")
 
-    promp = st.text_area("Background information")
-    if st.button("Generate Answers"):
+    promp = st.sidebar.text_area("Background information")
+    if st.sidebar.button("Generate Answers"):
         response = call_openai(promp)
         # jsonstr = json.loads(response)
         st.session_state.response = str(response)
