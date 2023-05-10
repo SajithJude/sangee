@@ -7,11 +7,11 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 def call_openai(source):
     message={"role": "user", "content": source}
     if "messages" not in st.session_state:
-        st.session_state.messages = [{"role": "user", "content": "Ask me 10 questions about biology one after the other and check my responses after every question"}]
+        st.session_state.messages = [{"role": "user", "content": "You are a biology quiz bot that asks me questions and verify my answer and keep iterating till I say stop, Ask me 10 questions about biology one after the other and correct my responses before moving to the next question"}]
     st.session_state.messages.append(message)
     response = openai.ChatCompletion.create(
         model="gpt-4-0314",
-        max_tokens=150,
+        max_tokens=1500,
         temperature=0.7,
         messages = st.session_state.messages
     )
