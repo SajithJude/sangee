@@ -11,7 +11,7 @@ def call_openai(source):
     # st.session_state.messages.append(message)
     response = openai.ChatCompletion.create(
         model="gpt-4-0314",
-        max_tokens=30000,
+        max_tokens=7000,
         temperature=0.7,
         messages = messages
     )
