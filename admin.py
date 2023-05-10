@@ -59,6 +59,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-    if st.session_state.response is not null:
+    if st.session_state.response is not None:
         st.write(st.session_state.response)
 
