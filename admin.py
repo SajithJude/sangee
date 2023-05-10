@@ -6,8 +6,8 @@ import json
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def call_openai(source):
-    if "messages" not in st.session_state:
-        st.session_state.messages = [{"role": "user", "content": f"You are the Buyer persona represents the following {} "}]
+    # if "messages" not in st.session_state:
+    messages = [{"role": "user", "content": f"You are the Buyer persona represents the following {} "}]
     # st.session_state.messages.append(message)
     response = openai.ChatCompletion.create(
         model="gpt-4-0314",
@@ -49,7 +49,7 @@ def main():
     user_input = st.text_input("You:")
 
     if st.button("Send"):
-        bot_response = call_openaiturbo(user_input)
+        bot_response = call_openaiturbo(st.session_state.jsonstr)
 
         conversation.markdown(f'**You:** {user_input}')
         conversation.markdown(f'**Bot:** {bot_response}')
