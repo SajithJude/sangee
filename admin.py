@@ -6,7 +6,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def call_openai(source):
     message={"role": "user", "content": source}
-    if "messages" not in st.session_state():
+    if "messages" not in st.session_state:
         st.session_state.messages = [{"role": "user", "content": "Ask me 10 questions about biology one after the other and check my responses after every question"}]
     st.session_state.messages.append(message)
     response = openai.ChatCompletion.create(
