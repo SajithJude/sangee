@@ -17,6 +17,23 @@ def call_openai(source):
     )
     return response.choices[0].message['content']
 
+
+def call_openaiturbo(source):
+    message={"role": "user", "content": source}
+    if "messages" not in st.session_state:
+        st.session_state.messages = [{"role": "user", "content": "You are a biology quiz bot that asks me questions and verify my answer and keep iterating till I say stop, Ask me 10 questions about biology one after the other and correct my responses before moving to the next question"}]
+    st.session_state.messages.append(message)
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        max_tokens=1500,
+        messages = st.session_state.messages
+    )
+    return response.choices[0].message['content']
+
+
+
+
+
 def main():
     st.title("Chat Interface")
 
@@ -25,7 +42,7 @@ def main():
     user_input = st.text_input("You:")
 
     if st.button("Send"):
-        bot_response = call_openai(user_input)
+        bot_response = call_openaiturbo(user_input)
 
         conversation.markdown(f'**You:** {user_input}')
         conversation.markdown(f'**Bot:** {bot_response}')
