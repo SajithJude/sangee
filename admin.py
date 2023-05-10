@@ -43,10 +43,10 @@ def main():
     promp = st.text_area("Background information")
     if st.button("Generate Answers"):
         response = call_openai(promp)
-        jsonstr = json.loads(response)
-        if "jsonstr" not in st.session_state:
-            st.session_state.jsonstr = jsonstr
-        st.write(st.session_state.jsonstr)
+        # jsonstr = json.loads(response)
+        if "response" not in st.session_state:
+            st.session_state.response = response
+        st.write(st.session_state.response)
     conversation = st.empty()
 
     user_input = st.text_input("You:")
