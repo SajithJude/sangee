@@ -23,7 +23,7 @@ def call_openai(source):
 def call_openaiturbo(inpt,source):
     
     if "messages" not in st.session_state:
-        st.session_state.messages= [{"role": "user", "content": "you are an interviewer who will ask 7 questions, (only one question at a time ), given in the following list with sample answers :\n"+str(source)+" \n, if the users answer misses any information from the actual , then ask an additional question in a way that you hint the user to provide the missing information in the next answer before moving to the next questions "}]
+        st.session_state.messages= [{"role": "user", "content": "you are an interviewer who will ask 7 questions, (only one question at a time ), given in the following list with sample answers :\n"+str(source)+" \n, if the users answers contain similar information from the actual answer but still misses any information, then ask an additional follow up question that obtains a binary answer about the missing information, at the end of all questions create a buyer persona for the user who responded "}]
     message={"role": "user", "content": str(inpt)}
     st.session_state.messages.append(message)
     response = openai.ChatCompletion.create(
