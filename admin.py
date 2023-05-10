@@ -25,7 +25,7 @@ def call_openaiturbo(source):
     st.session_state.messages.append(message)
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        max_tokens=1500,
+        max_tokens=150,
         messages = st.session_state.messages
     )
     return response.choices[0].message['content']
