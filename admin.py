@@ -52,7 +52,7 @@ def main():
     user_input = st.text_input("You:")
 
     if st.button("Send"):
-        bot_response = call_openaiturbo(user_input,response)
+        bot_response = call_openaiturbo(user_input,st.session_state.response)
 
         conversation.markdown(f'**You:** {user_input}')
         conversation.markdown(f'**Bot:** {bot_response}')
