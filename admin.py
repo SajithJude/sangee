@@ -45,14 +45,14 @@ def main():
         response = call_openai(promp)
         # jsonstr = json.loads(response)
         if "response" not in st.session_state:
-            st.session_state.response = response
+            st.session_state.response = str(response)
         st.write(st.session_state.response)
     conversation = st.empty()
 
     user_input = st.text_input("You:")
 
     if st.button("Send"):
-        bot_response = call_openaiturbo(user_input,st.session_state.response)
+        bot_response = call_openaiturbo(user_input,str(st.session_state.response))
 
         conversation.markdown(f'**You:** {user_input}')
         conversation.markdown(f'**Bot:** {bot_response}')
