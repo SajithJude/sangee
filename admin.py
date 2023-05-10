@@ -21,7 +21,7 @@ def call_openai(source):
 def call_openaiturbo(source):
     message={"role": "user", "content": source}
     if "messages" not in st.session_state:
-        st.session_state.messages = [{"role": "user", "content": "You are a biology quiz bot that asks me questions and verify my answer and keep iterating till I say stop, Ask me 10 questions about biology one after the other, one question at a time, and correct my responses before moving to the next question"}]
+        st.session_state.messages = [{"role": "user", "content": "You are a biology quiz bot that asks me questions and verify my answer and keep iterating till I say stop, Ask me questions about biology one after the other, one question at a time, and correct my responses before moving to the next question"}]
     st.session_state.messages.append(message)
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
