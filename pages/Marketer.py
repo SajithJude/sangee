@@ -23,7 +23,7 @@ def call_openai(source):
 
 def main():
     if "response" not in st.session_state:
-        st.session_state.response =""
+        st.session_state.response = ""
 
     st.title("Pragmatic")
 
@@ -36,7 +36,7 @@ def main():
 
 
 
-    if st.session_state.response is not None:
+    if st.session_state.response != "":
         email = st.text_input("Enter the email of the Buyer")
         send_email_button = st.button("Send email")
         with st.expander("Sample persona answers"):
