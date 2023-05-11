@@ -37,6 +37,8 @@ def main():
 
 
     if st.session_state.response is not None:
+        email = st.text_input("Enter the email of the Buyer")
+        send_email_button = st.button("Send email")
         with st.expander("Sample persona answers"):
             st.write(st.session_state.response)
 
