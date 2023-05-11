@@ -66,7 +66,7 @@ if "response" not in st.session_state:
 mcol.title("Marketing Admin")
 
 
-marketcol, personacol = mcol.tabs("Stimulate Sample Persona", "View Actual Persona")
+marketcol, personacol = mcol.tabs(["Stimulate Sample Persona", "View Actual Persona"])
 
 
 promp = marketcol.text_area("Background information of buyer")
