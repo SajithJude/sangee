@@ -74,6 +74,8 @@ conversation = buyercol.empty()
 
 mescol , butcol = buyercol.columns([10,2])
 user_input = mescol.text_input("Buyer:", placeholder="Type start and click send to initiate the quetsionare")
+butcol.write("")
+butcol.write("")
 
 if butcol.button("Send"):
     bot_response = call_openaiturbo(user_input,str(st.session_state.response))
