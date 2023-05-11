@@ -25,7 +25,7 @@ def call_openai(source):
 def call_openaiturbo(inpt,source):
     
     if "messages" not in st.session_state:
-        st.session_state.messages= [{"role": "user", "content": "you are an interviewer who will ask 7 questions about the user, (only one question at a time ), given in the following list with sample answers :\n"+str(source)+" \n, if the users answers contain similar information from the actual answer and misses any information, then ask an additional follow up question that obtains a binary answer about the missing information, at the end of all questions create a buyer persona for the user who responded "}]
+        st.session_state.messages= [{"role": "user", "content": "you are an interviewer who will ask 7 questions about the user, (only one question at a time ), given in the following list with sample answers :\n"+str(source)+" \n, if the users answer for a particular question contains similar information from the actual answer to that question but misses any information from the actual answer, then ask an additional follow up question that reminds him about the missing information, and if the user still gives the same answer then move on to the next question, Once the questionarie is complete greet the user saying thank you. If the user asks any additional questions tell him to contact the company's sales team. "}]
     message={"role": "user", "content": str(inpt)}
     st.session_state.messages.append(message)
     response = openai.ChatCompletion.create(
@@ -60,8 +60,6 @@ if marketcol.button("Stimulate"):
 
 
 if st.session_state.response != "":
-    # email = st.text_input("Enter the email of the Buyer")
-    # send_email_button = st.button("Send email")
     with marketcol.expander("Stimulted Persona"):
         marketcol.write(st.session_state.response)
 
