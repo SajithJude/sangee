@@ -39,7 +39,7 @@ def call_openaiturbo(inpt,source):
 
 
 
-marketcol , buyercol = st.columns(2)
+marketcol , buyercol = st.columns(2, gap="medium")
 
 if "response" not in st.session_state:
         st.session_state.response =""
