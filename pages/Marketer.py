@@ -27,7 +27,7 @@ def main():
 
     st.title("Pragmatic")
 
-    promp = st.text_area("Background information")
+    promp = st.text_area("Background information of buyer")
     if st.button("Generate Answers"):
         response = call_openai(promp)
         # jsonstr = json.loads(response)
