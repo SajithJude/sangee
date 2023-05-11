@@ -41,14 +41,8 @@ def main():
     if "response" not in st.session_state:
         st.session_state.response =""
 
-    st.title("Pragmatic Questionare")
+    st.title("Pragmatic Chatbot Questionare")
 
-    # promp = st.sidebar.text_area("Background information")
-    # if st.sidebar.button("Generate Answers"):
-    #     response = call_openai(promp)
-    #     # jsonstr = json.loads(response)
-    #     st.session_state.response = str(response)
-    #     st.write(st.session_state.response)
     conversation = st.empty()
 
     user_input = st.text_input("You:")
