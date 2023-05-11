@@ -4,7 +4,7 @@ import openai
 import json
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
-st.set_page_config(page_title=None, page_icon=None, layout="wide", initial_sidebar_state="expanded", menu_items=None)
+st.set_page_config(page_title=None, page_icon=None, layout="wide", initial_sidebar_state="collapsed", menu_items=None)
 
 
 def call_openai(source):
