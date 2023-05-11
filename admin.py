@@ -41,7 +41,7 @@ def main():
     if "response" not in st.session_state:
         st.session_state.response =""
 
-    st.title("Pragmatic")
+    st.title("Pragmatic Questionare")
 
     # promp = st.sidebar.text_area("Background information")
     # if st.sidebar.button("Generate Answers"):
