@@ -25,7 +25,7 @@ def main():
     if "response" not in st.session_state:
         st.session_state.response = ""
 
-    st.title("Pragmatic")
+    st.title("Marketing Admin")
 
     promp = st.text_area("Background information of buyer")
     if st.button("Generate Answers"):
