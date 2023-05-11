@@ -63,7 +63,7 @@ if "response" not in st.session_state:
 
 
 
-marketcol.title("Marketing Admin")
+mcol.title("Marketing Admin")
 
 
 marketcol, personacol = mcol.tabs("Stimulate Sample Persona", "View Actual Persona")
