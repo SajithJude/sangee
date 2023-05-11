@@ -41,7 +41,7 @@ def main():
     if "response" not in st.session_state:
         st.session_state.response =""
 
-    st.title("Pragmatic Chatbot Questionare")
+    st.title("Pragmatic Questionnare")
 
     conversation = st.empty()
 
