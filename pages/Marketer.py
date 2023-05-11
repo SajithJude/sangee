@@ -32,7 +32,7 @@ def main():
         response = call_openai(promp)
         # jsonstr = json.loads(response)
         st.session_state.response = str(response)
-        st.write(st.session_state.response)
+        # st.write(st.session_state.response)
 
 
 
