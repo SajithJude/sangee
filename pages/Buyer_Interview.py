@@ -45,7 +45,7 @@ def main():
 
     conversation = st.empty()
 
-    user_input = st.text_input("You:")
+    user_input = st.text_input("Buyer:")
 
     if st.button("Send"):
         bot_response = call_openaiturbo(user_input,str(st.session_state.response))
