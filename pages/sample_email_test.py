@@ -5,7 +5,7 @@ import streamlit as st
 
 
 emaiid= st.text_input("Enter email")
-if st.buttpon("Send"):
+if st.button("Send"):
     message = Mail(
         from_email='muthulingam.thanoraj@flipick.com',
         to_emails='judesajith.aj@gmail.com',
