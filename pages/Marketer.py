@@ -20,28 +20,48 @@ def call_openai(source):
     return response.choices[0].message['content']
 
 
+def call_openaiturbo(inpt,source):
+    
+    if "messages" not in st.session_state:
+        st.session_state.messages= [{"role": "user", "content": "you are an interviewer who will ask 7 questions about the user, (only one question at a time ), given in the following list with sample answers :\n"+str(source)+" \n, if the users answers contain similar information from the actual answer and misses any information, then ask an additional follow up question that obtains a binary answer about the missing information, at the end of all questions create a buyer persona for the user who responded "}]
+    message={"role": "user", "content": str(inpt)}
+    st.session_state.messages.append(message)
+    response = openai.ChatCompletion.create(
+        model="gpt-4-0314",
+        max_tokens=6800,
+        messages = st.session_state.messages
+    )
+    return response.choices[0].message['content']
+
+
+
+
 
 def main():
     if "response" not in st.session_state:
-        st.session_state.response = ""
+        st.session_state.response =""
 
-    st.title("Marketing Admin")
+    st.title("Pragmatic Questionare")
 
-    promp = st.text_area("Background information of buyer")
-    if st.button("Generate"):
-        response = call_openai(promp)
-        # jsonstr = json.loads(response)
-        st.session_state.response = str(response)
-        # st.write(st.session_state.response)
+    # promp = st.sidebar.text_area("Background information")
+    # if st.sidebar.button("Generate Answers"):
+    #     response = call_openai(promp)
+    #     # jsonstr = json.loads(response)
+    #     st.session_state.response = str(response)
+    #     st.write(st.session_state.response)
+    conversation = st.empty()
 
+    user_input = st.text_input("You:")
 
+    if st.button("Send"):
+        bot_response = call_openaiturbo(user_input,str(st.session_state.response))
 
-    if st.session_state.response != "":
-        email = st.text_input("Enter the email of the Buyer")
-        send_email_button = st.button("Send email")
-        with st.expander("Sample persona answers"):
-            st.write(st.session_state.response)
+        conversation.markdown(f'**You:** {user_input}')
+        conversation.info(f'**Bot:** {bot_response}')
 
 if __name__ == "__main__":
     main()
-    
+    # if st.session_state.response is not None:
+    #     with st.expander("Sample persona answers"):
+    #         st.write(st.session_state.response)
+
