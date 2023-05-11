@@ -43,12 +43,12 @@ def main():
 
     st.title("Pragmatic")
 
-    promp = st.sidebar.text_area("Background information")
-    if st.sidebar.button("Generate Answers"):
-        response = call_openai(promp)
-        # jsonstr = json.loads(response)
-        st.session_state.response = str(response)
-        st.write(st.session_state.response)
+    # promp = st.sidebar.text_area("Background information")
+    # if st.sidebar.button("Generate Answers"):
+    #     response = call_openai(promp)
+    #     # jsonstr = json.loads(response)
+    #     st.session_state.response = str(response)
+    #     st.write(st.session_state.response)
     conversation = st.empty()
 
     user_input = st.text_input("You:")
@@ -61,7 +61,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-    if st.session_state.response is not None:
-        with st.expander("Sample persona answers"):
-            st.write(st.session_state.response)
+    # if st.session_state.response is not None:
+    #     with st.expander("Sample persona answers"):
+    #         st.write(st.session_state.response)
 
