@@ -45,7 +45,7 @@ def main():
 
     conversation = st.empty()
 
-    user_input = st.text_input("Buyer:")
+    user_input = st.text_input("Buyer:", placeholder="Type start and click send to initiate the quetsionare")
 
     if st.button("Send"):
         bot_response = call_openaiturbo(user_input,str(st.session_state.response))
