@@ -71,9 +71,11 @@ buyercol.title("Pragmatic Questionnare")
 
 conversation = buyercol.empty()
 
+
+mescol , butcol = buyercol.columns([10,2])
 user_input = buyercol.text_input("Buyer:", placeholder="Type start and click send to initiate the quetsionare")
 
-if st.button("Send"):
+if buyercol.button("Send"):
     bot_response = call_openaiturbo(user_input,str(st.session_state.response))
 
     conversation.markdown(f'**You:** {user_input}')
