@@ -11,8 +11,6 @@ def call_openai(source):
     # if "messages" not in st.session_state:
     messages=[{"role": "system", "content": f"You are the Buyer persona represents the following {source} given this information answer the following questions :\n What is your most important job responsibilities and activities? • What are the top 5 obstacles that would interfere with your career success? Where would you look for information about products like your company and other industry trends? • What role do you play in the purchase process, would they define the need, evaluate different solutions, make the final purchase decision or some combination of those roles? • What other roles in the company would likely be part of the buying process and decision-making? • Why wouldn’t you already have a product like ours? • Are there related products that this buyer’s team uses that would need to integrate with your product? • What concerns would you have that might keep them from making the purchase decision? \n the response should consist of the questions and the answers "}]
 
-    # messages = [ {"role": "user", "content": f"You are the Buyer persona represents the following {source} "}]
-    # st.session_state.messages.append(message)
     response = openai.ChatCompletion.create(
         model="gpt-4-0314",
         max_tokens=7000,
@@ -20,6 +18,22 @@ def call_openai(source):
         messages = messages
     )
     return response.choices[0].message['content']
+
+
+
+
+def call_openai_bp(source):
+    # if "messages" not in st.session_state:
+    messages=[{"role": "system", "content": f"generate a buyer persona based on this interview conversation {source}"}]
+
+    response = openai.ChatCompletion.create(
+        model="gpt-4-0314",
+        max_tokens=7000,
+        temperature=0.7,
+        messages = messages
+    )
+    return response.choices[0].message['content']
+
 
 
 def call_openaiturbo(inpt,source):
@@ -36,10 +50,11 @@ def call_openaiturbo(inpt,source):
     return response.choices[0].message['content']
 
 
+if "qa_pairs" not in st.session_state:
+    st.session_state.qa_pairs = []
 
 
-
-marketcol , buyercol = st.columns(2, gap="large")
+mcol , buyercol = st.columns(2, gap="large")
 
 if "response" not in st.session_state:
         st.session_state.response =""
@@ -50,12 +65,21 @@ if "response" not in st.session_state:
 
 marketcol.title("Marketing Admin")
 
+
+marketcol, personacol = mcol.tabs("Stimulate Sample Persona", "View Actual Persona")
+
+
 promp = marketcol.text_area("Background information of buyer")
 if marketcol.button("Stimulate"):
     response = call_openai(promp)
     # jsonstr = json.loads(response)
     st.session_state.response = str(response)
     # st.write(st.session_state.response)
+
+if personacol.button("Generate"):
+    bp_variable = str(st.session_state.qa_pairs)
+    bp_res = call_openai_bp(bp_variable)
+    personacol.write(bp_res)
 
 
 
@@ -77,6 +101,8 @@ butcol.write("")
 
 if butcol.button("Send"):
     bot_response = call_openaiturbo(user_input,str(st.session_state.response))
+   
+    st.session_state.qa_pairs.append((user_input, bot_response))
 
     conversation.markdown(f'**You:** {user_input}')
     conversation.info(f'**Interviewer:** {bot_response}')
