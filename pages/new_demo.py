@@ -81,8 +81,14 @@ if col5.button('Generate Persona'):
 # Display the available personas in a dropdown
 if personas:
     selected_persona = section2.selectbox("Select a persona to display", options=list(personas.keys()))
+    persona_edit_prompt = section2.text_area("Enter your prompt")
     edit_persona = section2.button("Edit Persona")
     if selected_persona:
         section2.write(personas[selected_persona])
+    if edit_persona:
+        edit_prompt= f"Evolve the following persona : {personas[selected_persona]}\n with the additional information given in the prompt : {persona_edit_prompt}"
+        edited_persona= generate_persona(edit_prompt)
+        section2.write(edited_persona)
+
 else:
     section2.write("No personas available.")
