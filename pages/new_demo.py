@@ -106,7 +106,7 @@ if section2.button('Generate Persona Image'):
     image = openai.Image.create(
     prompt=imagePrompt,
     n=1,
-    size="1024x1024"
+    size="256x256"
     )
     image_url = image['data'][0]['url']
     section2.image(image_url, caption=personas[selected_persona])
