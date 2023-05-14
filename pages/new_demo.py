@@ -4,6 +4,7 @@ import os
 import json
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
+st.set_page_config(page_title=None, page_icon=None, layout="wide", initial_sidebar_state="collapsed", menu_items=None)
 
 def generate_persona(source):
     response = openai.Completion.create(
