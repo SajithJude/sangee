@@ -74,6 +74,12 @@ if col5.button('Generate Persona'):
     section1.success('Persona Saved successfully!')
 
 if col5.button('Generate Persona Image'):
+    persona_prompt = f"The user is a {role} in the {industry} industry. They work for a company called {company_name} which has approximately {company_size} employees. "\
+    f"The company is located in {location} and can be described as follows: {company_description}. "\
+    f"They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. "\
+    f"The user's demographic information is as follows: They are {age} years old. "\
+    f"The context for persona generation is {context}."
+
     imagePrompt = f"an image of a persona with following information {persona_prompt}"
     image = openai.Image.create(
     prompt="A cute baby sea otter",
