@@ -96,6 +96,8 @@ if personas:
 
         with open("db.json", "w") as f:
             json.dump(personas, f)
+        section2.success('Persona Edited and saved successfully!')
+
 
 else:
     section2.write("No personas available.")
