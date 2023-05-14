@@ -74,13 +74,14 @@ if col5.button('Generate Persona'):
     section1.success('Persona Saved successfully!')
 
 
-old = section2.expander("Persona")
 
 
 
 # Display the available personas in a dropdown
 if personas:
     selected_persona = section2.selectbox("Select a persona to display", options=list(personas.keys()))
+    old = section2.expander("Persona")
+
     persona_edit_prompt = section2.text_area("Enter your prompt")
     edit_persona = section2.button("Edit Persona")
     # if selected_persona:
