@@ -24,32 +24,32 @@ st.title('AI-Powered Persona Generation Tool')
 context = st.radio('Please select the context:', ['B2B', 'B2C'])
 
 # Create three columns for the input fields
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(3)
 
 # Input fields for demographic information
-with col1:
-    st.subheader('Demographic Information')
-    age = st.number_input('Age', min_value=0, max_value=120, step=1)
-    location = st.text_input('Location')
+# with col1:
+col1.subheader('Demographic Information')
+age = col1.number_input('Age', min_value=0, max_value=120, step=1)
+location = col1.text_input('Location')
 
 # Input fields for professional roles
-with col2:
-    st.subheader('Professional Roles')
-    role = st.text_input('Role')
-    industry = st.text_input('Industry')
-    company_size = st.number_input('Company Size', min_value=1, step=1)
+# with col2:
+col2.subheader('Professional Roles')
+role = col2.text_input('Role')
+industry = col2.text_input('Industry')
+company_size = col2.number_input('Company Size', min_value=1, step=1)
 
 # Input fields for company information
-with col3:
-    st.subheader('Company Information')
-    company_name = st.text_input('Company Name')
-    company_description = st.text_area('Company Description', max_chars=250)
+# with col3:
+col3.subheader('Company Information')
+company_name = col3.text_input('Company Name')
+company_description = col3.text_area('Company Description', max_chars=250)
 
 # Input fields for product descriptions
-st.subheader('Product Descriptions')
-product_name = st.text_input('Product Name')
-product_description = st.text_area('Product Description', max_chars=250)
-product_cost = st.number_input('Product Cost', format="%f")
+col4.subheader('Product Descriptions')
+product_name = col4.text_input('Product Name')
+product_description = col4.text_area('Product Description', max_chars=250)
+product_cost = col4.number_input('Product Cost', format="%f")
 
 # When user clicks this button, call your persona generation function with the provided inputs
 if st.button('Generate Persona'):
