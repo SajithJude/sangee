@@ -77,7 +77,7 @@ if col5.button('Generate Persona'):
 col6.subheader('Persona related Images')
 if col6.button('Generate Persona Image'):
     
-    imagePrompt = f"a photo of how the following persona might look like: {personas[selected_persona]}"
+    imagePrompt = f"a photo of how the following persona might look like: {persona}"
     image = openai.Image.create(
     prompt=imagePrompt,
     n=3,
@@ -85,7 +85,7 @@ if col6.button('Generate Persona Image'):
     )
     for item in image["data"]:
         # image_url = image['data'][0]['url']
-        col6.image(item["url"], caption=personas[selected_persona], width=100)
+        col6.image(item["url"], caption=persona, width=100)
     # section2.write(image_url)
 
 
