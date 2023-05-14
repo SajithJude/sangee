@@ -90,5 +90,10 @@ if personas:
         edited_persona= generate_persona(edit_prompt)
         section2.write(edited_persona)
 
+        personas[nickname] = edited_persona
+
+        with open("db.json", "w") as f:
+            json.dump(personas, f)
+
 else:
     section2.write("No personas available.")
