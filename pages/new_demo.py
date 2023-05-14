@@ -96,7 +96,7 @@ if col6.button('Generate Persona Image'):
 selected_persona = section2.selectbox("Select a persona to display", options=list(personas.keys()))
 old = section2.expander("Persona")
 
-persona_option = section1.radio('what do you wanna do:', ['edit', 'chat'],horizontal=True)
+persona_option = section2.radio('what do you wanna do:', ['edit', 'chat'],horizontal=True)
 
 if persona_option == "edit":
     persona_edit_prompt = section2.text_area("Enter your prompt")
