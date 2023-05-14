@@ -28,7 +28,7 @@ st.title('AI-Powered Persona Generation Tool')
 section1 , section2 = st.columns(2, gap="large")
 
 
-context = st.radio('Please select the context:', ['B2B', 'B2C'])
+context = section1.radio('Please select the context:', ['B2B', 'B2C'])
 
 col1 = section1.expander("Demographic Information") 
 col2 = section1.expander("Professional Roles") 
@@ -55,7 +55,7 @@ product_cost = col4.number_input('Product Cost', format="%f", value=50.0)
 
 nickname = st.text_input('Nickname for the persona', value='John Doe')
 
-if st.button('Generate Persona'):
+if section1.button('Generate Persona'):
 
     persona_prompt = f"The user is a {role} in the {industry} industry. They work for a company called {company_name} which has approximately {company_size} employees. "\
     f"The company is located in {location} and can be described as follows: {company_description}. "\
@@ -69,8 +69,8 @@ if st.button('Generate Persona'):
     with open("db.json", "w") as f:
         json.dump(personas, f)
 
-    st.write(persona)
-    st.success('Persona generated successfully!')
+    section1.write(persona)
+    section1.success('Persona Saved successfully!')
 
 
 
