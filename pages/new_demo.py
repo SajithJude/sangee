@@ -96,22 +96,26 @@ if col6.button('Generate Persona Image'):
 selected_persona = section2.selectbox("Select a persona to display", options=list(personas.keys()))
 old = section2.expander("Persona")
 
-persona_edit_prompt = section2.text_area("Enter your prompt")
-edit_persona = section2.button("Edit Persona")
-# if selected_persona:
-# with section2.expander("Persona"):
-old.write(personas[selected_persona])
-if edit_persona:
-    edit_prompt= f"Evolve the following persona : {personas[selected_persona]}\n based on the new information obtained which is given bellow\n  new_information : {persona_edit_prompt}"
-    edited_persona= generate_persona(edit_prompt)
-    section2.write(edited_persona)
+persona_option = section1.radio('what do you wanna do:', ['edit', 'chat'],horizontal=True)
 
-    personas[nickname] = edited_persona
+if persona_option == "edit":
+    persona_edit_prompt = section2.text_area("Enter your prompt")
+    edit_persona = section2.button("Edit Persona")
+    old.write(personas[selected_persona])
+    if edit_persona:
+        edit_prompt= f"Evolve the following persona : {personas[selected_persona]}\n based on the new information obtained which is given bellow\n  new_information : {persona_edit_prompt}"
+        edited_persona= generate_persona(edit_prompt)
+        section2.write(edited_persona)
 
-    with open("db.json", "w") as f:
-        json.dump(personas, f)
-    section2.success('Persona Edited and saved successfully!')
+        personas[nickname] = edited_persona
 
+        with open("db.json", "w") as f:
+            json.dump(personas, f)
+        section2.success('Persona Edited and saved successfully!')
+
+elif persona_option == "chat":
+    chat_input = section2.text_input("Whats your question")
+    ask_button = section2.button("Ask")
 
 
 else:
