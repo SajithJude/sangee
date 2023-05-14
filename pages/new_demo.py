@@ -102,7 +102,7 @@ if personas:
 
 if section2.button('Generate Persona Image'):
     
-    imagePrompt = f"an image of a persona with following information {edited_persona}"
+    imagePrompt = f"an image of a persona with following information {personas[selected_persona]}"
     image = openai.Image.create(
     prompt=imagePrompt,
     n=1,
