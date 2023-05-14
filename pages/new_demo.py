@@ -28,7 +28,7 @@ st.title('AI-Powered Persona Generation Tool')
 section1 , section2 = st.columns(2, gap="large")
 
 
-context = section1.radio('Please select the context:', ['B2B', 'B2C'])
+context = section1.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
 col1, col2, col3, col4 = section1.tabs(["Demographic Information","Professional Roles","Professional Roles","Product Descriptions"])
 
 # col1 = section1.expander("Demographic Information") 
