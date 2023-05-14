@@ -16,27 +16,34 @@ def generate_persona(source):
         presence_penalty=0
     )
     return response.choices[0].text
+
 # Title of your app
 st.title('AI-Powered Persona Generation Tool')
 
 # Radio button for B2B and B2C contexts
 context = st.radio('Please select the context:', ['B2B', 'B2C'])
 
+# Create three columns for the input fields
+col1, col2, col3 = st.columns(3)
+
 # Input fields for demographic information
-st.subheader('Demographic Information')
-age = st.number_input('Age', min_value=0, max_value=120, step=1)
-location = st.text_input('Location')
+with col1:
+    st.subheader('Demographic Information')
+    age = st.number_input('Age', min_value=0, max_value=120, step=1)
+    location = st.text_input('Location')
 
 # Input fields for professional roles
-st.subheader('Professional Roles')
-role = st.text_input('Role')
-industry = st.text_input('Industry')
-company_size = st.number_input('Company Size', min_value=1, step=1)
+with col2:
+    st.subheader('Professional Roles')
+    role = st.text_input('Role')
+    industry = st.text_input('Industry')
+    company_size = st.number_input('Company Size', min_value=1, step=1)
 
 # Input fields for company information
-st.subheader('Company Information')
-company_name = st.text_input('Company Name')
-company_description = st.text_area('Company Description', max_chars=250)
+with col3:
+    st.subheader('Company Information')
+    company_name = st.text_input('Company Name')
+    company_description = st.text_area('Company Description', max_chars=250)
 
 # Input fields for product descriptions
 st.subheader('Product Descriptions')
@@ -56,7 +63,4 @@ if st.button('Generate Persona'):
     person_a = generate_persona(persona_prompt)
     st.write(person_a)
 
-
-    # Call your persona generation function here
-    # persona = generate_persona(context, age, location, role, industry, company_size, company_name, company_description, product_name, product_description, product_cost)
     st.success('Persona generated successfully!')
