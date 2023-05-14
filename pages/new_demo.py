@@ -65,3 +65,14 @@ if st.button('Generate Persona'):
 
     st.write(persona)
     st.success('Persona generated successfully!')
+
+
+
+
+# Display the available personas in a dropdown
+if personas:
+    selected_persona = st.selectbox("Select a persona to display", options=list(personas.keys()))
+    if st.button('Display Persona'):
+        st.write(personas[selected_persona])
+else:
+    st.write("No personas available.")
