@@ -29,11 +29,12 @@ section1 , section2 = st.columns(2, gap="large")
 
 
 context = section1.radio('Please select the context:', ['B2B', 'B2C'])
+col1, col2, col3, col4 = section1.tabs(["Demographic Information","Professional Roles","Professional Roles","Product Descriptions"])
 
-col1 = section1.expander("Demographic Information") 
-col2 = section1.expander("Professional Roles") 
-col3 = section1.expander("Company Information") 
-col4 = section1.expander("Product Descriptions")
+# col1 = section1.expander("Demographic Information") 
+# col2 = section1.expander("Professional Roles") 
+# col3 = section1.expander("Company Information") 
+# col4 = section1.expander("Product Descriptions")
 
 col1.subheader('Demographic Information')
 age = col1.number_input('Age', min_value=0, max_value=120, step=1, value=25)
