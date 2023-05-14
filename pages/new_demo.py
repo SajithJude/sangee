@@ -54,7 +54,7 @@ product_name = col4.text_input('Product Name', value='Project Management Tool')
 product_description = col4.text_area('Product Description', max_chars=250, value='A tool for managing projects.')
 product_cost = col4.number_input('Product Cost', format="%f", value=50.0)
 
-nickname = section1.text_input('Nickname for the persona', value='John Doe')
+nickname = col5.text_input('Nickname for the persona', value='John Doe')
 
 if col5.button('Generate Persona'):
 
