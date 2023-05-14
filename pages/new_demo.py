@@ -86,7 +86,7 @@ if col5.button('Generate Persona Image'):
     n=2,
     size="1024x1024"
     )
-    st.write(imagePrompt)
+    st.write(image)
 
 
 
