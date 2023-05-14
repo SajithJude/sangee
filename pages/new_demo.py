@@ -24,7 +24,7 @@ st.title('AI-Powered Persona Generation Tool')
 context = st.radio('Please select the context:', ['B2B', 'B2C'])
 
 # Create three columns for the input fields
-col1, col2, col3, col4 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
 
 # Input fields for demographic information
 # with col1:
