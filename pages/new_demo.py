@@ -17,7 +17,6 @@ def generate_persona(source):
     )
     return response.choices[0].text
 
-# Load existing personas or initialize an empty dictionary
 try:
     with open("db.json", "r") as f:
         personas = json.load(f)
@@ -31,25 +30,24 @@ context = st.radio('Please select the context:', ['B2B', 'B2C'])
 col1, col2, col3, col4 = st.columns(4)
 
 col1.subheader('Demographic Information')
-age = col1.number_input('Age', min_value=0, max_value=120, step=1)
-location = col1.text_input('Location')
+age = col1.number_input('Age', min_value=0, max_value=120, step=1, value=25)
+location = col1.text_input('Location', value='New York')
 
 col2.subheader('Professional Roles')
-role = col2.text_input('Role')
-industry = col2.text_input('Industry')
-company_size = col2.number_input('Company Size', min_value=1, step=1)
+role = col2.text_input('Role', value='Product Manager')
+industry = col2.text_input('Industry', value='Software')
+company_size = col2.number_input('Company Size', min_value=1, step=1, value=100)
 
 col3.subheader('Company Information')
-company_name = col3.text_input('Company Name')
-company_description = col3.text_area('Company Description', max_chars=250)
+company_name = col3.text_input('Company Name', value='ABC Corp')
+company_description = col3.text_area('Company Description', max_chars=250, value='A leading software company.')
 
 col4.subheader('Product Descriptions')
-product_name = col4.text_input('Product Name')
-product_description = col4.text_area('Product Description', max_chars=250)
-product_cost = col4.number_input('Product Cost', format="%f")
+product_name = col4.text_input('Product Name', value='Project Management Tool')
+product_description = col4.text_area('Product Description', max_chars=250, value='A tool for managing projects.')
+product_cost = col4.number_input('Product Cost', format="%f", value=50.0)
 
-# Input field for nickname
-nickname = st.text_input('Nickname for the persona')
+nickname = st.text_input('Nickname for the persona', value='John Doe')
 
 if st.button('Generate Persona'):
 
@@ -59,11 +57,9 @@ if st.button('Generate Persona'):
     f"The user's demographic information is as follows: They are {age} years old. "\
     f"The context for persona generation is {context}."
 
-    # Generate persona and save it under the given nickname
     persona = generate_persona(persona_prompt)
     personas[nickname] = persona
 
-    # Save updated personas dictionary to db.json
     with open("db.json", "w") as f:
         json.dump(personas, f)
 
