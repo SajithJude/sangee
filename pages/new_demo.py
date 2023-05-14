@@ -74,7 +74,7 @@ if col5.button('Generate Persona'):
     section1.success('Persona Saved successfully!')
 
 
-
+old = section2.expander("Persona")
 
 
 
@@ -84,8 +84,8 @@ if personas:
     persona_edit_prompt = section2.text_area("Enter your prompt")
     edit_persona = section2.button("Edit Persona")
     # if selected_persona:
-    with section2.expander("Persona"):
-        section2.write(personas[selected_persona])
+    # with section2.expander("Persona"):
+    old.write(personas[selected_persona])
     if edit_persona:
         edit_prompt= f"Evolve the following persona : {personas[selected_persona]}\n based on the new information obtained which is given bellow\n  new_information : {persona_edit_prompt}"
         edited_persona= generate_persona(edit_prompt)
