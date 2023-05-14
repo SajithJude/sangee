@@ -73,6 +73,14 @@ if col5.button('Generate Persona'):
     section1.write(persona)
     section1.success('Persona Saved successfully!')
 
+if col5.button('Generate Persona Image'):
+    imagePrompt = f"an image of a persona with following information {persona_prompt}"
+    image = openai.Image.create(
+    prompt="A cute baby sea otter",
+    n=2,
+    size="1024x1024"
+    )
+    st.write(imagePrompt)
 
 
 
