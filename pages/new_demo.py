@@ -25,9 +25,15 @@ except FileNotFoundError:
 
 st.title('AI-Powered Persona Generation Tool')
 
+section1 , section2 = st.columns(2, gap="large")
+
+
 context = st.radio('Please select the context:', ['B2B', 'B2C'])
 
-col1, col2, col3, col4 = st.columns(4)
+col1 = section1.expander("Demographic Information") 
+col2 = section1.expander("Professional Roles") 
+col3 = section1.expander("Company Information") 
+col4 = section1.expander("Product Descriptions")
 
 col1.subheader('Demographic Information')
 age = col1.number_input('Age', min_value=0, max_value=120, step=1, value=25)
@@ -69,11 +75,13 @@ if st.button('Generate Persona'):
 
 
 
+
+
 # Display the available personas in a dropdown
 if personas:
-    selected_persona = st.selectbox("Select a persona to display", options=list(personas.keys()))
-    edit_persona = st.button("Edit Persona")
+    selected_persona = section2.selectbox("Select a persona to display", options=list(personas.keys()))
+    edit_persona = section2.button("Edit Persona")
     if selected_persona:
-        st.write(personas[selected_persona])
+        section2.write(personas[selected_persona])
 else:
-    st.write("No personas available.")
+    section2.write("No personas available.")
