@@ -74,7 +74,19 @@ if col5.button('Generate Persona'):
     section1.success('Persona Saved successfully!')
 
 
-
+col6.subheader('Persona related Images')
+if col6.button('Generate Persona Image'):
+    
+    imagePrompt = f"a photo of how the following persona might look like: {personas[selected_persona]}"
+    image = openai.Image.create(
+    prompt=imagePrompt,
+    n=3,
+    size="256x256"
+    )
+    for item in image["data"]:
+        # image_url = image['data'][0]['url']
+        col6.image(item["url"], caption=personas[selected_persona], width=100)
+    # section2.write(image_url)
 
 
 
@@ -100,17 +112,6 @@ if personas:
         section2.success('Persona Edited and saved successfully!')
 
 
-if section2.button('Generate Persona Image'):
-    
-    imagePrompt = f"a photo of how the following persona might look like: {personas[selected_persona]}"
-    image = openai.Image.create(
-    prompt=imagePrompt,
-    n=1,
-    size="256x256"
-    )
-    image_url = image['data'][0]['url']
-    section2.image(image_url, caption=personas[selected_persona])
-    # section2.write(image_url)
 
 else:
     section2.write("No personas available.")
