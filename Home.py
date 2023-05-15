@@ -13,7 +13,6 @@ documents = SimpleDirectoryReader('/data').load_data()
 index = GPTVectorStoreIndex.from_documents(documents)
 index.storage_context.persist()
 storage_context = StorageContext.from_defaults(persist_dir="./storage")
-index = load_index_from_storage(storage_context)
 
 
 
@@ -170,7 +169,7 @@ elif persona_option == "chat":
 #     section2.write("No personas available.")
 
 
-
+index = load_index_from_storage(storage_context)
 query_engine = index.as_query_engine()
 response = query_engine.query(f"Generate a Persona document for the following information: {persona_prompt}")
 but = st.button("jsnjs ")
