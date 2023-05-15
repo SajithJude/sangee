@@ -143,7 +143,7 @@ elif persona_option == "chat":
         st.session_state.conversation.append(('User', chat_input))
         st.session_state.conversation.append(('Persona', reply))
         # Display the conversation
-        personas[selected_persona]["conversation"] = conversation
+        personas[selected_persona]["conversation"] = st.session_state.conversation
 
         # Save the updated personas dictionary to db.json
         with open("db.json", "w") as f:
