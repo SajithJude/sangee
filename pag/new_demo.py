@@ -7,9 +7,9 @@ from llama_index import StorageContext, load_index_from_storage
 
 # rebuild storage context
 # load index
-documents = SimpleDirectoryReader('data').load_data()
-index = GPTVectorStoreIndex.from_documents(documents)
-index.storage_context.persist()
+# documents = SimpleDirectoryReader('data').load_data()
+# index = GPTVectorStoreIndex.from_documents(documents)
+# index.storage_context.persist()
 storage_context = StorageContext.from_defaults(persist_dir="./storage")
 index = load_index_from_storage(storage_context)
 
@@ -92,6 +92,11 @@ if col5.button('Generate Persona'):
     f"The user's demographic information is as follows: They are {age} years old. "\
     f"The context for persona generation is {context}."
 
+
+    # index_res = index.ques
+    query_engine = index.as_query_engine()
+    response = query_engine.query(f"Generate a Persona for the following information: {persona_prompt}")
+    st.write(response)
     persona = generate_persona(persona_prompt)
     if persona not in st.session_state:
         st.session_state.persona = persona
