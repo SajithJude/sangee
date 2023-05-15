@@ -45,7 +45,7 @@ section1 , section2 = st.columns(2, gap="large")
 
 
 context = section1.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
-col1, col2, col3, col4,col5 ,col6= section1.tabs(["Demographics","Roles","Company","Product","Generate","Pictures"])
+col1, col2, col3, ,context_tab, col4,col5 ,col6= section1.tabs(["Demographics","Roles","Company","Product","Generate","Pictures"])
 
 # col1 = section1.expander("Demographic Information") 
 # col2 = section1.expander("Professional Roles") 
@@ -53,8 +53,16 @@ col1, col2, col3, col4,col5 ,col6= section1.tabs(["Demographics","Roles","Compan
 # col4 = section1.expander("Product Descriptions")
 
 col1.subheader('Demographic Information')
-age = col1.number_input('Age', min_value=0, max_value=120, step=1, value=25)
+age = col1.slider('Age', min_value=0, max_value=120, step=1, value=25)
 location = col1.text_input('Location', value='New York')
+industry = col1.text_input('Industry', value='Software')
+company_size = col1.number_input('Company Size', min_value=1, step=1, value=100)
+
+context_tab.subheader('Context Information')
+problems = context_tab.text_area('Problems', max_chars=250, value='Problem 1, Problem 2')
+goals = context_tab.text_area('Goals', max_chars=250, value='Goal 1, Goal 2')
+user_type = context_tab.radio('User Type', ['Sheep', 'Pioneer'])
+
 
 col2.subheader('Professional Roles')
 role = col2.text_input('Role', value='Product Manager')
@@ -62,13 +70,15 @@ industry = col2.text_input('Industry', value='Software')
 company_size = col2.number_input('Company Size', min_value=1, step=1, value=100)
 
 col3.subheader('Company Information')
-company_name = col3.text_input('Company Name', value='ABC Corp')
 company_description = col3.text_area('Company Description', max_chars=250, value='A leading software company.')
+client_base_size = col3.number_input('Size of Current Client Base', min_value=1, step=1, value=100)
+client_base_industries = col3.text_area('Industries of Client Base', max_chars=250, value='Software, Information Technology')
 
 col4.subheader('Product Descriptions')
 product_name = col4.text_input('Product Name', value='Project Management Tool')
 product_description = col4.text_area('Product Description', max_chars=250, value='A tool for managing projects.')
 product_cost = col4.number_input('Product Cost', format="%f", value=50.0)
+competitive_products = col4.text_area('Competitive Products', max_chars=250, value='Competitor Product A, Competitor Product B')
 
 nickname = col5.text_input('Nickname for the persona', value='John Doe')
 
