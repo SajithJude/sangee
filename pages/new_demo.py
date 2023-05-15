@@ -129,11 +129,23 @@ if persona_option == "edit":
         section2.success('Persona Edited and saved successfully!')
 
 elif persona_option == "chat":
-    chat_input = section2.text_input("Whats your question")
+    chat_input = section2.text_input("What's your question?")
     ask_button = section2.button("Ask")
-    if ask_button:
-        reply = call_gpt4(chat_input,personas[selected_persona])
-        section2.info(reply)
 
+    # Create a string or list to hold the conversation if it doesn't exist
+    if 'conversation' not in st.session_state:
+        st.session_state.conversation = ''
+
+    if ask_button:
+        reply = call_gpt4(chat_input, personas[selected_persona])
+
+        # Append the user's question and the generated response to the conversation
+        st.session_state.conversation += f'User: {chat_input}\n'
+        st.session_state.conversation += f'AI: {reply}\n'
+
+        # Display the conversation
+        section2.text(st.session_state.conversation)
+
+        
 else:
     section2.write("No personas available.")
