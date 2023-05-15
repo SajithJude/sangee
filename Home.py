@@ -183,7 +183,7 @@ if but:
 
     index = load_index_from_storage(storage_context)
     query_engine = index.as_query_engine()
-    response = query_engine.query(f"Generate a Persona document for the following information: {st.session_state.persona_prompt}")
+    response = query_engine.query(f"Generate a Persona document for the following information, exclude names: {st.session_state.persona_prompt}")
 
     st.write(response)
 
