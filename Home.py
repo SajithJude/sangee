@@ -3,6 +3,20 @@ import openai
 import os
 import json
 
+
+from llama_index import GPTVectorStoreIndex, SimpleDirectoryReader
+from llama_index import StorageContext, load_index_from_storage
+
+# rebuild storage context
+# load index
+documents = SimpleDirectoryReader('data').load_data()
+index = GPTVectorStoreIndex.from_documents(documents)
+index.storage_context.persist()
+storage_context = StorageContext.from_defaults(persist_dir="./storage")
+index = load_index_from_storage(storage_context)
+
+
+
 openai.api_key = os.getenv("OPENAI_API_KEY")
 st.set_page_config(page_title=None, page_icon=None, layout="wide", initial_sidebar_state="collapsed", menu_items=None)
 
@@ -152,10 +166,16 @@ elif persona_option == "chat":
                 # with section2.expander(f'{speaker}:'):
                 #     section2.text(text)
 
-else:
-    section2.write("No personas available.")
+# else:
+#     section2.write("No personas available.")
 
 
+
+query_engine = index.as_query_engine()
+response = query_engine.query(f"Generate a Persona document for the following information: {persona_prompt}")
+but = st.button("jsnjs ")
+if but:
+    st.write(response)
 
 
 
