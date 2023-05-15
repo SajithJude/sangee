@@ -57,7 +57,7 @@ age = col1.slider('Age', min_value=0, max_value=120, step=1, value=25)
 location = col1.text_input('Location', value='New York')
 industry = col1.text_input('Industry', value='Software')
 company_size = col1.number_input('Company Size', min_value=1, step=1, value=100)
-role = col2.text_input('Role', value='Product Manager')
+role = col1.text_input('Role', value='Product Manager')
 
 
 context_tab.subheader('Context Information')
