@@ -45,7 +45,7 @@ section1 , section2 = st.columns(2, gap="large")
 
 
 context = section1.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
-col1, col2, col3, context_tab, col4,col5 ,col6= section1.tabs(["Demographics","Roles","Company","Product","Generate","Pictures"])
+col1, col2, col3, context_tab, col4,col5 ,col6= section1.tabs(["Demographics","Roles","Company","Additional Context","Product","Generate","Pictures"])
 
 # col1 = section1.expander("Demographic Information") 
 # col2 = section1.expander("Professional Roles") 
