@@ -36,7 +36,7 @@ def generate_persona(source):
 try:
     with open("db.json", "r") as f:
         personas = json.load(f)
-except json.JSONDecodeError,FileNotFoundError:
+except json.JSONDecodeError as e:
     personas = {}
 
 st.title('AI-Powered Persona Generation Tool')
