@@ -138,7 +138,7 @@ elif persona_option == "chat":
 
     if ask_button:
         reply = call_gpt4(chat_input, personas[selected_persona])
-
+        section2.info(reply)
         # Append the user's question and the generated response to the conversation
         st.session_state.conversation.append(('User', chat_input))
         st.session_state.conversation.append(('Persona', reply))
