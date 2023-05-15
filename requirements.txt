@@ -3,3 +3,4 @@ openai
 streamlit-chat
 sendgrid
 llama-index
+PyPDF2
