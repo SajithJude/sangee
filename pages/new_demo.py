@@ -141,15 +141,17 @@ elif persona_option == "chat":
 
         # Append the user's question and the generated response to the conversation
         st.session_state.conversation.append(('User', chat_input))
-        st.session_state.conversation.append(('AI', reply))
-
+        st.session_state.conversation.append(('Persona', reply))
         # Display the conversation
         for speaker, text in st.session_state.conversation:
+            pers = section2.expander("Persona")
             if speaker == 'User':
                 section2.text(f'{speaker}: {text}')
-            else:  # speaker == 'AI'
-                with section2.expander(f'{speaker}:'):
-                    section2.text(text)
+            else:
+                pers.text(text)
+                  # speaker == 'AI'
+                # with section2.expander(f'{speaker}:'):
+                #     section2.text(text)
 
 else:
     section2.write("No personas available.")
