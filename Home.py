@@ -66,7 +66,7 @@ user_type = context_tab.radio('User Type', ['Sheep', 'Pioneer'])
 
 col2.subheader('Professional Roles')
 role = col2.text_input('Role', value='Product Manager')
-industry = col2.text_input('Industry', value='Software')
+# industry = col2.text_input('Industry', value='Software')
 company_size = col2.number_input('Company Size', min_value=1, step=1, value=100)
 
 col3.subheader('Company Information')
