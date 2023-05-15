@@ -172,6 +172,7 @@ elif persona_option == "chat":
 
 query_engine = index.as_query_engine()
 response = query_engine.query(f"Generate a Persona document for the following information: {persona_prompt}")
+but = st.button("jsnjs ")
 if response:
     st.write(response)
 
