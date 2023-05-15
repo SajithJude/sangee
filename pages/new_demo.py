@@ -144,11 +144,11 @@ elif persona_option == "chat":
         st.session_state.conversation.append(('Persona', reply))
         # Display the conversation
         for speaker, text in st.session_state.conversation:
-            pers = section2.expander("Persona")
+            pers = st.sidebar.expander("Persona")
             if speaker == 'User':
-                section2.text(f'{speaker}: {text}')
+                st.sidebar.write(f'{speaker}: {text}')
             else:
-                pers.text(text)
+                pers.write(text)
                   # speaker == 'AI'
                 # with section2.expander(f'{speaker}:'):
                 #     section2.text(text)
