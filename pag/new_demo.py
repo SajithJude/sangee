@@ -94,9 +94,7 @@ if col5.button('Generate Persona'):
 
 
     # index_res = index.ques
-    query_engine = index.as_query_engine()
-    response = query_engine.query(f"Generate a Persona for the following information: {persona_prompt}")
-    st.write(response)
+    
     persona = generate_persona(persona_prompt)
     if persona not in st.session_state:
         st.session_state.persona = persona
@@ -170,5 +168,13 @@ elif persona_option == "chat":
                 # with section2.expander(f'{speaker}:'):
                 #     section2.text(text)
 
-else:
-    section2.write("No personas available.")
+
+
+query_engine = index.as_query_engine()
+response = query_engine.query(f"Generate a Persona document for the following information: {persona_prompt}")
+if response:
+    st.write(response)
+
+
+# else:
+#     section2.write("No personas available.")
