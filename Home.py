@@ -35,7 +35,7 @@ def generate_persona(source):
         model="text-davinci-002",
         prompt=source,
         temperature=0.56,
-        max_tokens=2066,
+        max_tokens=3066,
         top_p=1,
         frequency_penalty=0.35,
         presence_penalty=0
