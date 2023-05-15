@@ -134,7 +134,7 @@ elif persona_option == "chat":
 
     # Create a string or list to hold the conversation if it doesn't exist
     if 'conversation' not in st.session_state:
-        st.session_state.conversation = ''
+        st.session_state.conversation = []
 
     if ask_button:
         reply = call_gpt4(chat_input, personas[selected_persona])
