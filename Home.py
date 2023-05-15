@@ -45,7 +45,7 @@ section1 , section2 = st.columns(2, gap="large")
 
 
 context = section1.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
-col1, col2, col3, context_tab, col4,col5 ,col6= section1.tabs(["Demographics","Roles","Company","Additional Context","Product","Generate","Pictures"])
+col1,  col3, context_tab, col4,col5 ,col6= section1.tabs(["Demographics","Company","Additional Context","Product","Generate","Pictures"])
 
 # col1 = section1.expander("Demographic Information") 
 # col2 = section1.expander("Professional Roles") 
@@ -57,17 +57,14 @@ age = col1.slider('Age', min_value=0, max_value=120, step=1, value=25)
 location = col1.text_input('Location', value='New York')
 industry = col1.text_input('Industry', value='Software')
 company_size = col1.number_input('Company Size', min_value=1, step=1, value=100)
+role = col2.text_input('Role', value='Product Manager')
+
 
 context_tab.subheader('Context Information')
 problems = context_tab.text_area('Problems', max_chars=250, value='Problem 1, Problem 2')
 goals = context_tab.text_area('Goals', max_chars=250, value='Goal 1, Goal 2')
 user_type = context_tab.radio('User Type', ['Sheep', 'Pioneer'])
 
-
-col2.subheader('Professional Roles')
-role = col2.text_input('Role', value='Product Manager')
-# industry = col2.text_input('Industry', value='Software')
-company_size = col2.number_input('Company Size', min_value=1, step=1, value=100)
 
 col3.subheader('Company Information')
 company_description = col3.text_area('Company Description', max_chars=250, value='A leading software company.')
