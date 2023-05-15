@@ -169,7 +169,7 @@ elif persona_option == "chat":
 but = st.button("jsnjs ")
 if but:
 
-    llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1900))
+    llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=3500))
     service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
 
     folder_name = "data"
