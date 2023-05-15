@@ -168,7 +168,10 @@ elif persona_option == "chat":
 but = st.button("jsnjs ")
 if but:
 
-    documents = SimpleDirectoryReader('./data').load_data()
+    folder_name = "data"
+    path = os.path.join(".", folder_name)
+
+    documents = SimpleDirectoryReader(path).load_data()
     index = GPTVectorStoreIndex.from_documents(documents)
     index.storage_context.persist()
     storage_context = StorageContext.from_defaults(persist_dir="./storage")
