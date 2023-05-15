@@ -9,7 +9,7 @@ from llama_index import StorageContext, load_index_from_storage
 
 # rebuild storage context
 # load index
-documents = SimpleDirectoryReader('data').load_data()
+documents = SimpleDirectoryReader('/data').load_data()
 index = GPTVectorStoreIndex.from_documents(documents)
 index.storage_context.persist()
 storage_context = StorageContext.from_defaults(persist_dir="./storage")
