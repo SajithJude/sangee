@@ -6,6 +6,21 @@ import json
 openai.api_key = os.getenv("OPENAI_API_KEY")
 st.set_page_config(page_title=None, page_icon=None, layout="wide", initial_sidebar_state="collapsed", menu_items=None)
 
+
+def call_openaiturbo(inpt,source):
+    if "mssages" not in st.session_state:
+        st.session_state.mssages= [{"role": "user", "content": f"you are a person with the following traits {source}, \n Given this information answer the questions asked in the next messages."}]
+    message={"role": "user", "content": str(inpt)}
+    st.session_state.mssages.append(message)
+    response = openai.ChatCompletion.create(
+        model="gpt-4-0314",
+        max_tokens=6800,
+        messages = st.session_state.mssages
+    )
+    return response.choices[0].message['content']
+
+
+
 def generate_persona(source):
     response = openai.Completion.create(
         model="text-davinci-002",
@@ -116,7 +131,9 @@ if persona_option == "edit":
 elif persona_option == "chat":
     chat_input = section2.text_input("Whats your question")
     ask_button = section2.button("Ask")
-
+    if ask_button:
+        reply = call_openaiturbo(chat_input,personas[selected_persona])
+        section2.info(reply)
 
 else:
     section2.write("No personas available.")
