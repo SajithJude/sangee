@@ -4,7 +4,7 @@ import os
 import json
 
 
-from llama_index import GPTVectorStoreIndex, SimpleDirectoryReader
+from llama_index import GPTVectorStoreIndex, SimpleDirectoryReader , ServiceContext, LLMPredictor
 from llama_index import StorageContext, load_index_from_storage
 
 # rebuild storage context
@@ -168,11 +168,14 @@ elif persona_option == "chat":
 but = st.button("jsnjs ")
 if but:
 
+    llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=1900))
+    service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
+
     folder_name = "data"
     path = os.path.join(".", folder_name)
 
     documents = SimpleDirectoryReader(path).load_data()
-    index = GPTVectorStoreIndex.from_documents(documents)
+    index = GPTVectorStoreIndex.from_documents(documents,service_context=service_context)
     index.storage_context.persist()
     storage_context = StorageContext.from_defaults(persist_dir="./storage")
 
