@@ -7,7 +7,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 st.set_page_config(page_title=None, page_icon=None, layout="wide", initial_sidebar_state="collapsed", menu_items=None)
 
 
-def call_openaiturbo(inpt,source):
+def call_gpt4(inpt,source):
     if "mssages" not in st.session_state:
         st.session_state.mssages= [{"role": "user", "content": f"you are a person with the following traits {source}, \n Given this information answer the questions asked in the next messages."}]
     message={"role": "user", "content": str(inpt)}
@@ -132,7 +132,7 @@ elif persona_option == "chat":
     chat_input = section2.text_input("Whats your question")
     ask_button = section2.button("Ask")
     if ask_button:
-        reply = call_openaiturbo(chat_input,personas[selected_persona])
+        reply = call_gpt4(chat_input,personas[selected_persona])
         section2.info(reply)
 
 else:
