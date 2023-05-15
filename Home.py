@@ -78,7 +78,7 @@ if col5.button('Generate Persona'):
     f"The company is located in {location} and can be described as follows: {company_description}. "\
     f"They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. "\
     f"The user's demographic information is as follows: They are {age} years old. "\
-    f"The context for persona generation is {context}."
+    f"The type of business for persona generation is {context}."
 
     persona = generate_persona(persona_prompt)
     if persona not in st.session_state:
