@@ -3,6 +3,7 @@ import openai
 import os
 import json
 
+from langchain import OpenAI
 
 from llama_index import GPTVectorStoreIndex, SimpleDirectoryReader , ServiceContext, LLMPredictor
 from llama_index import StorageContext, load_index_from_storage
