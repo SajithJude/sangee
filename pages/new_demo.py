@@ -13,8 +13,7 @@ def call_openaiturbo(inpt,source):
     message={"role": "user", "content": str(inpt)}
     st.session_state.mssages.append(message)
     response = openai.ChatCompletion.create(
-        model="gpt-4-0314",
-        max_tokens=6800,
+        model="gpt-3.5-turbo",
         messages = st.session_state.mssages
     )
     return response.choices[0].message['content']
