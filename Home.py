@@ -47,10 +47,6 @@ section1 , section2 = st.columns(2, gap="large")
 context = section1.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
 col1,  col3, context_tab, col4,col5 ,col6= section1.tabs(["Demographics","Company","Additional Context","Product","Generate","Pictures"])
 
-# col1 = section1.expander("Demographic Information") 
-# col2 = section1.expander("Professional Roles") 
-# col3 = section1.expander("Company Information") 
-# col4 = section1.expander("Product Descriptions")
 
 col1.subheader('Demographic Information')
 age = col1.slider('Age', min_value=0, max_value=120, step=1, value=25)
@@ -81,11 +77,7 @@ nickname = col5.text_input('Nickname for the persona', value='John Doe')
 
 if col5.button('Generate Persona'):
 
-    persona_prompt = f"The user is a {role} in the {industry} industry. They work for a company called {company_name} which has approximately {company_size} employees. "\
-    f"The company is located in {location} and can be described as follows: {company_description}. "\
-    f"They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. "\
-    f"The user's demographic information is as follows: They are {age} years old. "\
-    f"The type of business for persona generation is {context}."
+    persona_prompt = f"Generate a persona for the user who is a {role} in the {industry} industry. They work for a company with approximately {company_size} employees. The company is described as follows: {company_description}. They have a client base of around {client_base_size} clients, operating in the following industries: {client_base_industries}. Their current problems include: {problems}. Their goals are: {goals}. The user is {age} years old, located in {location}, and identifies as a {user_type}. They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. They face competition from the following products: {competitive_products}."
 
     persona = generate_persona(persona_prompt)
     if persona not in st.session_state:
