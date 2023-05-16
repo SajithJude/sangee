@@ -26,11 +26,17 @@ if but:
     documents = SimpleDirectoryReader(path).load_data()
     index = GPTListIndex.from_documents(documents,service_context=service_context)
     index.storage_context.persist()
+    
+    # st.write(response)
+
+
+
+persona_in = st.text_input("Prompt")
+send_bu = st.button("query")
+
+if send_bu:
     storage_context = StorageContext.from_defaults(persist_dir="./storage")
-
-
     index = load_index_from_storage(storage_context)
     query_engine = index.as_query_engine()
-    response = query_engine.query(f"Generate a Persona document for the following information, exclude names: {st.session_state.persona_prompt}")
-
-    st.write(response)
+    response = query_engine.query(persona_in)
+    st.write(response.response)
