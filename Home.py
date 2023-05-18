@@ -30,7 +30,7 @@ def call_gpt4(inpt,source):
     return response.choices[0].message['content']
 
 def save_uploaded_file(uploaded_file):
-    with open(os.path.join(DATA_DIR, uploaded_file.name), "wb") as f:
+    with open(os.path.join(".", f"data/{uploaded_file.name}"), "wb") as f:
         f.write(uploaded_file.getbuffer())
 
 
