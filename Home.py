@@ -129,13 +129,15 @@ if user_input == 'Upload File':
 
         col3.subheader('Company Information')
         company_description = col3.text_area('Company Description', max_chars=250, value=response_json['Company Description'])
-        client_base_size = col3.number_input('Size of Current Client Base', min_value=1, step=1 if response_json['Size of Current Client Base'] == 'N/A' else int(response_json['Size of Current Client Base']))
+        client_base_size = col1.text_input('Size of Current Client Base', value=response_json['Size of Current Client Base'])
+        # client_base_size = col3.number_input('Size of Current Client Base', min_value=1, step=1 if response_json['Size of Current Client Base'] == 'N/A' else int(response_json['Size of Current Client Base']))
         client_base_industries = col3.text_area('Industries of Client Base', max_chars=250, value=response_json['Industries of Client Base'])
 
         col4.subheader('Product Descriptions')
         product_name = col4.text_input('Product Name', value=response_json['Product Name'])
         product_description = col4.text_area('Product Description', max_chars=250, value=response_json['Product Description'])
-        product_cost = col4.number_input('Product Cost', format="%f", value=0.0 if response_json['Product Cost'] == 'N/A' else float(response_json['Product Cost']))
+        product_cost = col1.text_input('Product Cost', value=response_json['Product Cost'])
+        # product_cost = col4.number_input('Product Cost', format="%f", value=0.0 if response_json['Product Cost'] == 'N/A' else float(response_json['Product Cost']))
         competitive_products = col4.text_area('Competitive Products', max_chars=250, value=response_json['Competitive Products'])
         nickname = col5.text_input('Nickname for the persona', value='John Doe')
 
