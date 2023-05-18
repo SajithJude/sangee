@@ -36,6 +36,21 @@ def call_gpt4(inpt,source):
     )
     return response.choices[0].message['content']
 
+
+
+def call_gpt3(inpt,source):
+    if "mssages" not in st.session_state:
+        st.session_state.mssages= [{"role": "user", "content": f"you are a person with the following traits {source}, \n Given this information answer the questions asked in the next messages."}]
+    message={"role": "user", "content": str(inpt)}
+    st.session_state.mssages.append(message)
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages = st.session_state.mssages
+    )
+    return response.choices[0].message['content']
+
+
+
 def save_uploaded_file(uploaded_file):
     with open(os.path.join(DATA_DIR, uploaded_file.name), "wb") as f:
         f.write(uploaded_file.getbuffer())
@@ -259,6 +274,9 @@ old = section2.expander("Persona")
 
 persona_option = section2.radio('what do you wanna do with this persona:', ['edit', 'chat'],horizontal=True)
 
+# Add a dropdown menu for the engine selection
+engine_option = section2.selectbox('Select an engine:', ['GPT-4', 'Turbo'])
+
 if persona_option == "edit" and selected_persona in personas:
     persona_edit_prompt = section2.text_area("What new information do you have about this persona?")
     edit_persona = section2.button("Edit Persona")
@@ -283,7 +301,12 @@ elif persona_option == "chat":
         st.session_state.conversation = []
 
     if ask_button:
-        reply = call_gpt4(chat_input, personas[selected_persona])
+        # Use different functions depending on the selected engine
+        if engine_option == 'GPT-4':
+            reply = call_gpt4(chat_input, personas[selected_persona])
+        elif engine_option == 'Turbo':
+            reply = call_gpt3(chat_input, personas[selected_persona])
+
         section2.info(reply)
         # Append the user's question and the generated response to the conversation
         st.session_state.conversation.append(('User', chat_input))
@@ -295,4 +318,3 @@ elif persona_option == "chat":
                 st.sidebar.write(f'{speaker}: {text}')
             else:
                 pers.write(text)
-               
