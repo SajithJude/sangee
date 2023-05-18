@@ -104,14 +104,17 @@ if user_input == 'Upload File':
         response = index.query(f"Extract the following information and give the output as a valid JSON string in the specified format {format}")
 
         response_json = json.loads(response.response)
+        section1.write("PDF extracted")
         # section1.write(response_json)
+    
 
-    if response_json is not None:
+    if section1.button("Populate Values"):
         
         context = section1.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
         col1,  col3, context_tab, col4,col5 ,col6= section1.tabs(["Demographics","Company","Additional Context","Product","Generate","Pictures"])
 
-        age = col1.slider('Age', min_value=0, max_value=120, step=1, value=int(response_json['Age']) if response_json['Age'].isdigit() else 0)
+        age = col1.text_input('Location', value=response_json['Age'])
+        # age = col1.slider('Age', min_value=0, max_value=120, step=1, value=int(response_json['Age']) if response_json['Age'].isdigit() else 0)
         location = col1.text_input('Location', value=response_json['Location'])
         industry = col1.text_input('Industry', value=response_json['Industry'])
         company_size = col1.number_input('Company Size', min_value=1, step=1, value=1 if response_json['Company Size'] == 'N/A' else int(response_json['Company Size']))
