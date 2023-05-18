@@ -29,7 +29,7 @@ def call_gpt4(inpt,source):
     )
     return response.choices[0].message['content']
 
-def save_uploaded_file(uploaded_file):
+def save_uploaded_file(uploaded_file, DATA_DIR):
     with open(os.path.join(DATA_DIR, uploaded_file.name), "wb") as f:
         f.write(uploaded_file.getbuffer())
 
@@ -71,7 +71,7 @@ format = """{
 # Check if a file was uploaded
 if uploaded_file is not None:
     # Save the uploaded file to the data directory
-    # save_uploaded_file(uploaded_file)
+    save_uploaded_file(uploaded_file, DATA_DIR)
     st.success("It would take a while to index the books, please wait..!")
 
 # Create a button to create the index
