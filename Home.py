@@ -12,7 +12,7 @@ from pathlib import Path
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 st.set_page_config(page_title=None, page_icon=None, layout="wide", initial_sidebar_state="collapsed", menu_items=None)
-DATA_DIR = "./data"
+DATA_DIR = "data"
 
 PDFReader = download_loader("PDFReader")
 loader = PDFReader()
