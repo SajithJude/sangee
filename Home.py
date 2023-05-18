@@ -14,6 +14,13 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 st.set_page_config(page_title=None, page_icon=None, layout="wide", initial_sidebar_state="collapsed", menu_items=None)
 DATA_DIR = "data"
 
+# check if the file doesn't exist
+if not os.path.exists('db.json'):
+    # if not, create it
+    with open('db.json', 'w') as f:
+        # initializing an empty dictionary in the json file
+        json.dump({}, f)
+
 PDFReader = download_loader("PDFReader")
 loader = PDFReader()
 
