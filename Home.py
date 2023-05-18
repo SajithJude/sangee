@@ -169,6 +169,9 @@ if user_input == 'Upload File':
             )
             for i, item in enumerate(image["data"]):
                 cols[i].image(item["url"],width=100)
+
+    else:
+        section1.write("No Files to Populate")
         
 elif user_input == 'Manual Input':
 
