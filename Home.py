@@ -65,21 +65,21 @@ if user_input == 'Upload File':
     uploaded_file = section1.file_uploader("Upload a PDF file", type="pdf")
 
     format = """{
-        "Age": "age",
-        "Location": "location",
-        "Industry": "industry",
-        "Company Size": "company_size",
-        "Role": "role",
-        "Company Description": "Company Description",
+        "Age": "age of the persona",
+        "Location": "location of the person",
+        "Industry": "industry who belongs to",
+        "Company Size": "the size of the company",
+        "Role": "the role or job description of the persona",
+        "Company Description": "the  Description of the company or workplace of the persona",
         "Size of Current Client Base": "size of Current Client Base",
         "Industries of Client Base": "Industries of Client Base",
-        "Problems": "Problems",
-        "Goal": "Goal",
-        "User Type": "User Type",
-        "Product Name": "Product Name",
+        "Problems": "Problems faced by the persona",
+        "Goal": "Goals of the persona",
+        "User Type": "TECHNICAL PROFICIENCY",
+        "Product Name": "the product name or technologies",
         "Product Description": "Product Description",
         "Product Cost": "Product Cost",
-        "Competitive Products" : "Competitive Products" 
+        "Competitive Products" : "Competitive Products or services" 
     }"""
 
     # Check if a file was uploaded
@@ -114,7 +114,7 @@ if user_input == 'Upload File':
         context = context_tab.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
 
 
-        age = col1.text_input('Location', value=response_json['Age'])
+        age = col1.text_input('Age', value=response_json['Age'])
         # age = col1.slider('Age', min_value=0, max_value=120, step=1, value=int(response_json['Age']) if response_json['Age'].isdigit() else 0)
         location = col1.text_input('Location', value=response_json['Location'])
         industry = col1.text_input('Industry', value=response_json['Industry'])
