@@ -117,7 +117,7 @@ if user_input == 'Upload File':
         # age = col1.slider('Age', min_value=0, max_value=120, step=1, value=int(response_json['Age']) if response_json['Age'].isdigit() else 0)
         location = col1.text_input('Location', value=response_json['Location'])
         industry = col1.text_input('Industry', value=response_json['Industry'])
-        company_size = col1.text_input('company size', value=response_json['company_size'])
+        company_size = col1.text_input('company size', value=response_json['Company Size'])
         # company_size = col1.number_input('Company Size', min_value=1, step=1, value=1 if response_json['Company Size'] == 'N/A' else int(response_json['Company Size']))
         role = col1.text_input('Role', value=response_json['Role'])
 
