@@ -102,6 +102,9 @@ if user_input == 'Upload File':
         response = index.query(f"Extract the following information and give the output as a valid JSON string in the specified format {format}")
 
         response_json = json.loads(response.response)
+        if "response_json" not in st.session_state:
+            st.session_state.response_json = response_json
+
         section1.success("Fields extracted, Click on 'Populate Values' to continue")
         # section1.write(response_json)
     
@@ -112,41 +115,41 @@ if user_input == 'Upload File':
         context = context_tab.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
 
 
-        age = col1.text_input('Age', value=response_json['Age'])
-        # age = col1.slider('Age', min_value=0, max_value=120, step=1, value=int(response_json['Age']) if response_json['Age'].isdigit() else 0)
-        location = col1.text_input('Location', value=response_json['Location'])
-        industry = col1.text_input('Industry', value=response_json['Industry'])
-        company_size = col1.text_input('company size', value=response_json['Company Size'])
-        # company_size = col1.number_input('Company Size', min_value=1, step=1, value=1 if response_json['Company Size'] == 'N/A' else int(response_json['Company Size']))
-        role = col1.text_input('Role', value=response_json['Role'])
+        age = col1.text_input('Age', value=st.session_state.response_json['Age'])
+        # age = col1.slider('Age', min_value=0, max_value=120, step=1, value=int(st.session_state.response_json['Age']) if st.session_state.response_json['Age'].isdigit() else 0)
+        location = col1.text_input('Location', value=st.session_state.response_json['Location'])
+        industry = col1.text_input('Industry', value=st.session_state.response_json['Industry'])
+        company_size = col1.text_input('company size', value=st.session_state.response_json['Company Size'])
+        # company_size = col1.number_input('Company Size', min_value=1, step=1, value=1 if st.session_state.response_json['Company Size'] == 'N/A' else int(st.session_state.response_json['Company Size']))
+        role = col1.text_input('Role', value=st.session_state.response_json['Role'])
 
         context_tab.subheader('Context Information')
-        problems = context_tab.text_area('Problems', max_chars=250, value=response_json['Problems'])
-        goals = context_tab.text_area('Goals', max_chars=250, value=response_json['Goal'])
-        user_type = context_tab.radio('User Type', ['Sheep', 'Pioneer'], index=0 if response_json['User Type'] == 'Sheep' else 1)
+        problems = context_tab.text_area('Problems', max_chars=250, value=st.session_state.response_json['Problems'])
+        goals = context_tab.text_area('Goals', max_chars=250, value=st.session_state.response_json['Goal'])
+        user_type = context_tab.radio('User Type', ['Sheep', 'Pioneer'], index=0 if st.session_state.response_json['User Type'] == 'Sheep' else 1)
 
         col3.subheader('Company Information')
-        company_description = col3.text_area('Company Description', max_chars=250, value=response_json['Company Description'])
-        client_base_size = col1.text_input('Size of Current Client Base', value=response_json['Size of Current Client Base'])
-        # client_base_size = col3.number_input('Size of Current Client Base', min_value=1, step=1 if response_json['Size of Current Client Base'] == 'N/A' else int(response_json['Size of Current Client Base']))
-        client_base_industries = col3.text_area('Industries of Client Base', max_chars=250, value=response_json['Industries of Client Base'])
+        company_description = col3.text_area('Company Description', max_chars=250, value=st.session_state.response_json['Company Description'])
+        client_base_size = col1.text_input('Size of Current Client Base', value=st.session_state.response_json['Size of Current Client Base'])
+        # client_base_size = col3.number_input('Size of Current Client Base', min_value=1, step=1 if st.session_state.response_json['Size of Current Client Base'] == 'N/A' else int(st.session_state.response_json['Size of Current Client Base']))
+        client_base_industries = col3.text_area('Industries of Client Base', max_chars=250, value=st.session_state.response_json['Industries of Client Base'])
 
         col4.subheader('Product Descriptions')
-        product_name = col4.text_input('Product Name', value=response_json['Product Name'])
-        product_description = col4.text_area('Product Description', max_chars=250, value=response_json['Product Description'])
-        product_cost = col1.text_input('Product Cost', value=response_json['Product Cost'])
-        # product_cost = col4.number_input('Product Cost', format="%f", value=0.0 if response_json['Product Cost'] == 'N/A' else float(response_json['Product Cost']))
-        competitive_products = col4.text_area('Competitive Products', max_chars=250, value=response_json['Competitive Products'])
+        product_name = col4.text_input('Product Name', value=st.session_state.response_json['Product Name'])
+        product_description = col4.text_area('Product Description', max_chars=250, value=st.session_state.response_json['Product Description'])
+        product_cost = col1.text_input('Product Cost', value=st.session_state.response_json['Product Cost'])
+        # product_cost = col4.number_input('Product Cost', format="%f", value=0.0 if st.session_state.response_json['Product Cost'] == 'N/A' else float(st.session_state.response_json['Product Cost']))
+        competitive_products = col4.text_area('Competitive Products', max_chars=250, value=st.session_state.response_json['Competitive Products'])
         
         nickname = col5.text_input('Nickname for the persona', value='John Doe')
 
         if col5.button('Generate Persona'):
 
             persona_prompt = f"Generate a persona for the user who is a {role} in the {industry} industry. They work for a company with approximately {company_size} employees. The company is described as follows: {company_description}. They have a client base of around {client_base_size} clients, operating in the following industries: {client_base_industries}. Their current problems include: {problems}. Their goals are: {goals}. The user is {age} years old, located in {location}, and identifies as a {user_type}. They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. They face competition from the following products: {competitive_products}."
-            section1.write(persona_prompt)
+            
             if "persona_prompt" not in st.session_state:
                 st.session_state.persona_prompt= persona_prompt
-
+            
             persona = generate_persona(persona_prompt)
             if persona not in st.session_state:
                 st.session_state.persona = persona
