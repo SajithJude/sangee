@@ -86,7 +86,7 @@ if user_input == 'Upload File':
     if uploaded_file is not None:
         # Save the uploaded file to the data directorya
         save_uploaded_file(uploaded_file)
-        st.success("It would take a while to analyze and extract the fields, please wait..!")
+        section1.success("It would take a while to analyze and extract the fields, please wait..!")
 
     # Create a button to create the index
     # if st.button("Create Index"):
