@@ -100,7 +100,7 @@ if uploaded_file is not None:
 
     response = index.query(f"Extract the following information and give the output as a valid JSON string in the specified format {format}")
 
-    response_json = json.load(response.response)
+    response_json = json.loads(response.response)
 
 
     section1.write(response_json)
