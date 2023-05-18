@@ -65,7 +65,13 @@ format = """{
     'Location': location,
     'Industry': industry,
     'Company Size': company_size,
-    'Role': role
+    'Role': role,
+    'Company Description' : 'A leading software company.',
+    'Size of Current Client Base' : 100,
+    'Industries of Client Base' : 'Software, Information Technology',
+    'Problems': 'Problem 1, Problem 2',,
+    'Goal' : 'Goal 1, Goal 2',
+    'User Type' : 'Sheep or Pioneer'
 }"""
 
 # Check if a file was uploaded
