@@ -86,7 +86,7 @@ if user_input == 'Upload File':
     if uploaded_file is not None:
         # Save the uploaded file to the data directorya
         save_uploaded_file(uploaded_file)
-        st.success("It would take a while to index the books, please wait..!")
+        st.success("It would take a while to analyze and extract the fields, please wait..!")
 
     # Create a button to create the index
     # if st.button("Create Index"):
@@ -104,7 +104,7 @@ if user_input == 'Upload File':
         response = index.query(f"Extract the following information and give the output as a valid JSON string in the specified format {format}")
 
         response_json = json.loads(response.response)
-        section1.write("PDF extracted")
+        section1.success("Fields extracted, Click on 'Populate Values' to continue")
         # section1.write(response_json)
     
 
@@ -128,7 +128,7 @@ if user_input == 'Upload File':
 
         col3.subheader('Company Information')
         company_description = col3.text_area('Company Description', max_chars=250, value=response_json['Company Description'])
-        client_base_size = col3.number_input('Size of Current Client Base', min_value=1, step=1, value=1 if response_json['Size of Current Client Base'] == 'N/A' else int(response_json['Size of Current Client Base']))
+        client_base_size = col3.number_input('Size of Current Client Base', min_value=1, step=1 if response_json['Size of Current Client Base'] == 'N/A' else int(response_json['Size of Current Client Base']))
         client_base_industries = col3.text_area('Industries of Client Base', max_chars=250, value=response_json['Industries of Client Base'])
 
         col4.subheader('Product Descriptions')
