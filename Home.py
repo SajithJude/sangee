@@ -30,7 +30,7 @@ def call_gpt4(inpt,source):
     return response.choices[0].message['content']
 
 def save_uploaded_file(uploaded_file):
-    with open(os.path.join(".", Path(f"data/{uploaded_file.name}")), "wb") as f:
+    with open(os.path.join(DATA_DIR, uploaded_file.name), "wb") as f:
         f.write(uploaded_file.getbuffer())
 
 
@@ -57,100 +57,192 @@ st.title('AI-Powered Persona Generation Tool')
 
 section1 , section2 = st.columns(2, gap="large")
 
+user_input = section1.radio('Please select an option:', ['Upload File', 'Manual Input'],horizontal=True)
 
-uploaded_file = st.file_uploader("Upload a PDF file", type="pdf")
+if user_input == 'Upload File':
+    uploaded_file = section1.file_uploader("Upload a PDF file", type="pdf")
 
-format = """{
-    'Age': age,
-    'Location': location,
-    'Industry': industry,
-    'Company Size': company_size,
-    'Role': role
-}"""
+    format = """{
+        "Age": "age of the persona",
+        "Location": "location of the person",
+        "Industry": "industry who belongs to",
+        "Company Size": "the size of the company",
+        "Role": "the role or job description of the persona",
+        "Company Description": "the  Description of the company or workplace of the persona",
+        "Size of Current Client Base": "size of Current Client Base",
+        "Industries of Client Base": "Industries of Client Base",
+        "Problems": "Problems faced by the persona",
+        "Goal": "Goals of the persona",
+        "User Type": "TECHNICAL PROFICIENCY",
+        "Product Name": "the product name or technologies",
+        "Product Description": "Product Description",
+        "Product Cost": "Product Cost",
+        "Competitive Products" : "Competitive Products or services" 
+    }"""
 
-# Check if a file was uploaded
-if uploaded_file is not None:
-    # Save the uploaded file to the data directorya
-    save_uploaded_file(uploaded_file)
-    st.success("It would take a while to index the books, please wait..!")
+    # Check if a file was uploaded
+    if uploaded_file is not None:
+        # Save the uploaded file to the data directorya
+        save_uploaded_file(uploaded_file)
+        section1.success("It would take a while to analyze and extract the fields, please wait..!")
 
-# Create a button to create the index
-# if st.button("Create Index"):
-    # Get the filename of the uploaded PDF
-    pdf_filename = uploaded_file.name
+        # Create a button to create the index
+        # if st.button("Create Index"):
+        # Get the filename of the uploaded PDF
+        pdf_filename = uploaded_file.name
 
-    # Load the documents from the data directory
-    documents = loader.load_data(
-        file=Path(f"{os.path.join(DATA_DIR, uploaded_file.name)}"))
+        # Load the documents from the data directory
+        documents = loader.load_data(
+            file=Path(f"{os.path.join(DATA_DIR, uploaded_file.name)}"))
 
-    # Create the index from the documents
-    index = GPTVectorStoreIndex.from_documents(documents)
-    index = index.as_query_engine()
+        # Create the index from the documents
+        index = GPTVectorStoreIndex.from_documents(documents)
+        index = index.as_query_engine()
 
-    response = index.query(f"Extract the following information and give the output as a valid JSON string in the specified format {format}")
+        response = index.query(f"Extract the following information and give the output as a valid JSON string in the specified format {format}")
 
-    section1.write(response.response)
+        response_json = json.loads(response.response)
+        if "response_json" not in st.session_state:
+            st.session_state.response_json = response_json
 
-context = section1.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
-col1,  col3, context_tab, col4,col5 ,col6= section1.tabs(["Demographics","Company","Additional Context","Product","Generate","Pictures"])
+        section1.success("Fields extracted, Click on 'Populate Values' to continue")
+        # section1.write(response_json)
+    
+
+        # section1.button("Populate Values"):
+        
+    col1,  col3, context_tab, col4,col5 ,col6= section1.tabs(["Demographics","Company","Additional Context","Product","Generate","Pictures"])
+    context = context_tab.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
+
+try:
+    age = col1.text_input('Age', value=st.session_state.response_json['Age'])
+    # age = col1.slider('Age', min_value=0, max_value=120, step=1, value=int(st.session_state.response_json['Age']) if st.session_state.response_json['Age'].isdigit() else 0)
+    location = col1.text_input('Location', value=st.session_state.response_json['Location'])
+    industry = col1.text_input('Industry', value=st.session_state.response_json['Industry'])
+    company_size = col1.text_input('company size', value=st.session_state.response_json['Company Size'])
+    # company_size = col1.number_input('Company Size', min_value=1, step=1, value=1 if st.session_state.response_json['Company Size'] == 'N/A' else int(st.session_state.response_json['Company Size']))
+    role = col1.text_input('Role', value=st.session_state.response_json['Role'])
+
+    context_tab.subheader('Context Information')
+    problems = context_tab.text_area('Problems', max_chars=250, value=st.session_state.response_json['Problems'])
+    goals = context_tab.text_area('Goals', max_chars=250, value=st.session_state.response_json['Goal'])
+    user_type = context_tab.radio('User Type', ['Sheep', 'Pioneer'], index=0 if st.session_state.response_json['User Type'] == 'Sheep' else 1)
+
+    col3.subheader('Company Information')
+    company_description = col3.text_area('Company Description', max_chars=250, value=st.session_state.response_json['Company Description'])
+    client_base_size = col1.text_input('Size of Current Client Base', value=st.session_state.response_json['Size of Current Client Base'])
+    # client_base_size = col3.number_input('Size of Current Client Base', min_value=1, step=1 if st.session_state.response_json['Size of Current Client Base'] == 'N/A' else int(st.session_state.response_json['Size of Current Client Base']))
+    client_base_industries = col3.text_area('Industries of Client Base', max_chars=250, value=st.session_state.response_json['Industries of Client Base'])
+
+    col4.subheader('Product Descriptions')
+    product_name = col4.text_input('Product Name', value=st.session_state.response_json['Product Name'])
+    product_description = col4.text_area('Product Description', max_chars=250, value=st.session_state.response_json['Product Description'])
+    product_cost = col1.text_input('Product Cost', value=st.session_state.response_json['Product Cost'])
+    # product_cost = col4.number_input('Product Cost', format="%f", value=0.0 if st.session_state.response_json['Product Cost'] == 'N/A' else float(st.session_state.response_json['Product Cost']))
+    competitive_products = col4.text_area('Competitive Products', max_chars=250, value=st.session_state.response_json['Competitive Products'])
+        
+    nickname = col5.text_input('Nickname for the persona', value='John Doe')
+
+    if col5.button('Generate Persona'):
+
+        persona_prompt = f"Generate a persona for the user who is a {role} in the {industry} industry. They work for a company with approximately {company_size} employees. The company is described as follows: {company_description}. They have a client base of around {client_base_size} clients, operating in the following industries: {client_base_industries}. Their current problems include: {problems}. Their goals are: {goals}. The user is {age} years old, located in {location}, and identifies as a {user_type}. They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. They face competition from the following products: {competitive_products}."
+        
+        if "persona_prompt" not in st.session_state:
+            st.session_state.persona_prompt= persona_prompt
+        
+        persona = generate_persona(persona_prompt)
+        if persona not in st.session_state:
+            st.session_state.persona = persona
+        personas[nickname] = persona
+
+        with open("db.json", "w") as f:
+            json.dump(personas, f) 
+
+        section1.write(persona)
+        section1.success('Persona Saved successfully!')
 
 
-col1.subheader('Demographic Information')
-age = col1.slider('Age', min_value=0, max_value=120, step=1, value=25)
-location = col1.text_input('Location', value='New York')
-industry = col1.text_input('Industry', value='Software')
-company_size = col1.number_input('Company Size', min_value=1, step=1, value=100)
-role = col1.text_input('Role', value='Product Manager')
+    col6.subheader('Persona related Images')
+    if col6.button('Generate Persona Image'):
+        cols = col6.columns(3)
+        imagePrompt = f"a photo of how the following person might look like in person: {st.session_state.persona}"
+        image = openai.Image.create(
+        prompt=imagePrompt,
+        n=3,
+        size="256x256"
+        )
+        for i, item in enumerate(image["data"]):
+            cols[i].image(item["url"],width=100)
+
+    # else:
+    #     section1.write("")
+except AttributeError as e:
+    section1.info("Upload a Persona Document to get started")
+        
+elif user_input == 'Manual Input':
+
+    context = section1.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
+    col1,  col3, context_tab, col4, col5 ,col6= section1.tabs(["Demographics","Company","Additional Context","Product","Generate","Pictures"])
 
 
-context_tab.subheader('Context Information')
-problems = context_tab.text_area('Problems', max_chars=250, value='Problem 1, Problem 2')
-goals = context_tab.text_area('Goals', max_chars=250, value='Goal 1, Goal 2')
-user_type = context_tab.radio('User Type', ['Sheep', 'Pioneer'])
+    col1.subheader('Demographic Information')
+    age = col1.slider('Age', min_value=0, max_value=120, step=1, value=25)
+    location = col1.text_input('Location', value='New York')
+    industry = col1.text_input('Industry', value='Software')
+    company_size = col1.number_input('Company Size', min_value=1, step=1, value=100)
+    role = col1.text_input('Role', value='Product Manager')
 
 
-col3.subheader('Company Information')
-company_description = col3.text_area('Company Description', max_chars=250, value='A leading software company.')
-client_base_size = col3.number_input('Size of Current Client Base', min_value=1, step=1, value=100)
-client_base_industries = col3.text_area('Industries of Client Base', max_chars=250, value='Software, Information Technology')
-
-col4.subheader('Product Descriptions')
-product_name = col4.text_input('Product Name', value='Project Management Tool')
-product_description = col4.text_area('Product Description', max_chars=250, value='A tool for managing projects.')
-product_cost = col4.number_input('Product Cost', format="%f", value=50.0)
-competitive_products = col4.text_area('Competitive Products', max_chars=250, value='Competitor Product A, Competitor Product B')
-
-nickname = col5.text_input('Nickname for the persona', value='John Doe')
-
-if col5.button('Generate Persona'):
-
-    persona_prompt = f"Generate a persona for the user who is a {role} in the {industry} industry. They work for a company with approximately {company_size} employees. The company is described as follows: {company_description}. They have a client base of around {client_base_size} clients, operating in the following industries: {client_base_industries}. Their current problems include: {problems}. Their goals are: {goals}. The user is {age} years old, located in {location}, and identifies as a {user_type}. They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. They face competition from the following products: {competitive_products}."
-    if "persona_prompt" not in st.session_state:
-        st.session_state.persona_prompt= persona_prompt
-
-    persona = generate_persona(persona_prompt)
-    if persona not in st.session_state:
-        st.session_state.persona = persona
-    personas[nickname] = persona
-
-    with open("db.json", "w") as f:
-        json.dump(personas, f)
-
-    section1.write(persona)
-    section1.success('Persona Saved successfully!')
+    context_tab.subheader('Context Information')
+    problems = context_tab.text_area('Problems', max_chars=250, value='Problem 1, Problem 2')
+    goals = context_tab.text_area('Goals', max_chars=250, value='Goal 1, Goal 2')
+    user_type = context_tab.radio('User Type', ['Sheep', 'Pioneer'])
 
 
-col6.subheader('Persona related Images')
-if col6.button('Generate Persona Image'):
-    cols = col6.columns(3)
-    imagePrompt = f"a photo of how the following person might look like in person: {st.session_state.persona}"
-    image = openai.Image.create(
-    prompt=imagePrompt,
-    n=3,
-    size="256x256"
-    )
-    for i, item in enumerate(image["data"]):
-        cols[i].image(item["url"],width=100)
+    col3.subheader('Company Information')
+    company_description = col3.text_area('Company Description', max_chars=250, value='A leading software company.')
+    client_base_size = col3.number_input('Size of Current Client Base', min_value=1, step=1, value=100)
+    client_base_industries = col3.text_area('Industries of Client Base', max_chars=250, value='Software, Information Technology')
+
+    col4.subheader('Product Descriptions')
+    product_name = col4.text_input('Product Name', value='Project Management Tool')
+    product_description = col4.text_area('Product Description', max_chars=250, value='A tool for managing projects.')
+    product_cost = col4.number_input('Product Cost', format="%f", value=50.0)
+    competitive_products = col4.text_area('Competitive Products', max_chars=250, value='Competitor Product A, Competitor Product B')
+
+    nickname = col5.text_input('Nickname for the persona', value='John Doe')
+
+    if col5.button('Generate Persona'):
+
+        persona_prompt = f"Generate a persona for the user who is a {role} in the {industry} industry. They work for a company with approximately {company_size} employees. The company is described as follows: {company_description}. They have a client base of around {client_base_size} clients, operating in the following industries: {client_base_industries}. Their current problems include: {problems}. Their goals are: {goals}. The user is {age} years old, located in {location}, and identifies as a {user_type}. They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. They face competition from the following products: {competitive_products}."
+        if "persona_prompt" not in st.session_state:
+            st.session_state.persona_prompt= persona_prompt
+
+        persona = generate_persona(persona_prompt)
+        if persona not in st.session_state:
+            st.session_state.persona = persona
+        personas[nickname] = persona
+
+        with open("db.json", "w") as f:
+            json.dump(personas, f)
+
+        section1.write(persona)
+        section1.success('Persona Saved successfully!')
+
+
+    col6.subheader('Persona related Images')
+    if col6.button('Generate Persona Image'):
+        cols = col6.columns(3)
+        imagePrompt = f"a photo of how the following person might look like in person: {st.session_state.persona}"
+        image = openai.Image.create(
+        prompt=imagePrompt,
+        n=3,
+        size="256x256"
+        )
+        for i, item in enumerate(image["data"]):
+            cols[i].image(item["url"],width=100)
+
+
 
 
 
