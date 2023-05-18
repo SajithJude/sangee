@@ -60,8 +60,6 @@ section1 , section2 = st.columns(2, gap="large")
 user_input = section1.radio('Please select an option:', ['Upload File', 'Manual Input'],horizontal=True)
 
 if user_input == 'Upload File':
-
-
     uploaded_file = section1.file_uploader("Upload a PDF file", type="pdf")
 
     format = """{
@@ -140,37 +138,37 @@ if user_input == 'Upload File':
         # product_cost = col4.number_input('Product Cost', format="%f", value=0.0 if response_json['Product Cost'] == 'N/A' else float(response_json['Product Cost']))
         competitive_products = col4.text_area('Competitive Products', max_chars=250, value=response_json['Competitive Products'])
         
-        # nickname = col5.text_input('Nickname for the persona', value='John Doe')
+        nickname = col5.text_input('Nickname for the persona', value='John Doe')
 
-        # if col5.button('Generate Persona'):
+        if col5.button('Generate Persona'):
 
-        #     persona_prompt = f"Generate a persona for the user who is a {role} in the {industry} industry. They work for a company with approximately {company_size} employees. The company is described as follows: {company_description}. They have a client base of around {client_base_size} clients, operating in the following industries: {client_base_industries}. Their current problems include: {problems}. Their goals are: {goals}. The user is {age} years old, located in {location}, and identifies as a {user_type}. They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. They face competition from the following products: {competitive_products}."
-        #     if "persona_prompt" not in st.session_state:
-        #         st.session_state.persona_prompt= persona_prompt
+            persona_prompt = f"Generate a persona for the user who is a {role} in the {industry} industry. They work for a company with approximately {company_size} employees. The company is described as follows: {company_description}. They have a client base of around {client_base_size} clients, operating in the following industries: {client_base_industries}. Their current problems include: {problems}. Their goals are: {goals}. The user is {age} years old, located in {location}, and identifies as a {user_type}. They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. They face competition from the following products: {competitive_products}."
+            if "persona_prompt" not in st.session_state:
+                st.session_state.persona_prompt= persona_prompt
 
-        #     persona = generate_persona(persona_prompt)
-        #     if persona not in st.session_state:
-        #         st.session_state.persona = persona
-        #     personas[nickname] = persona
+            persona = generate_persona(persona_prompt)
+            if persona not in st.session_state:
+                st.session_state.persona = persona
+            personas[nickname] = persona
 
-        #     with open("db.json", "w") as f:
-        #         json.dump(personas, f) 
+            with open("db.json", "w") as f:
+                json.dump(personas, f) 
 
-        #     section1.write(persona)
-        #     section1.success('Persona Saved successfully!')
+            section1.write(persona)
+            section1.success('Persona Saved successfully!')
 
 
-        # col6.subheader('Persona related Images')
-        # if col6.button('Generate Persona Image'):
-        #     cols = col6.columns(3)
-        #     imagePrompt = f"a photo of how the following person might look like in person: {st.session_state.persona}"
-        #     image = openai.Image.create(
-        #     prompt=imagePrompt,
-        #     n=3,
-        #     size="256x256"
-        #     )
-        #     for i, item in enumerate(image["data"]):
-        #         cols[i].image(item["url"],width=100)
+        col6.subheader('Persona related Images')
+        if col6.button('Generate Persona Image'):
+            cols = col6.columns(3)
+            imagePrompt = f"a photo of how the following person might look like in person: {st.session_state.persona}"
+            image = openai.Image.create(
+            prompt=imagePrompt,
+            n=3,
+            size="256x256"
+            )
+            for i, item in enumerate(image["data"]):
+                cols[i].image(item["url"],width=100)
         
 elif user_input == 'Manual Input':
 
@@ -203,37 +201,39 @@ elif user_input == 'Manual Input':
     product_cost = col4.number_input('Product Cost', format="%f", value=50.0)
     competitive_products = col4.text_area('Competitive Products', max_chars=250, value='Competitor Product A, Competitor Product B')
 
-nickname = col5.text_input('Nickname for the persona', value='John Doe')
+    nickname = col5.text_input('Nickname for the persona', value='John Doe')
 
-if col5.button('Generate Persona'):
+    if col5.button('Generate Persona'):
 
-    persona_prompt = f"Generate a persona for the user who is a {role} in the {industry} industry. They work for a company with approximately {company_size} employees. The company is described as follows: {company_description}. They have a client base of around {client_base_size} clients, operating in the following industries: {client_base_industries}. Their current problems include: {problems}. Their goals are: {goals}. The user is {age} years old, located in {location}, and identifies as a {user_type}. They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. They face competition from the following products: {competitive_products}."
-    if "persona_prompt" not in st.session_state:
-        st.session_state.persona_prompt= persona_prompt
+        persona_prompt = f"Generate a persona for the user who is a {role} in the {industry} industry. They work for a company with approximately {company_size} employees. The company is described as follows: {company_description}. They have a client base of around {client_base_size} clients, operating in the following industries: {client_base_industries}. Their current problems include: {problems}. Their goals are: {goals}. The user is {age} years old, located in {location}, and identifies as a {user_type}. They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. They face competition from the following products: {competitive_products}."
+        if "persona_prompt" not in st.session_state:
+            st.session_state.persona_prompt= persona_prompt
 
-    persona = generate_persona(persona_prompt)
-    if persona not in st.session_state:
-        st.session_state.persona = persona
-    personas[nickname] = persona
+        persona = generate_persona(persona_prompt)
+        if persona not in st.session_state:
+            st.session_state.persona = persona
+        personas[nickname] = persona
 
-    with open("db.json", "w") as f:
-        json.dump(personas, f)
+        with open("db.json", "w") as f:
+            json.dump(personas, f)
 
-    section1.write(persona)
-    section1.success('Persona Saved successfully!')
+        section1.write(persona)
+        section1.success('Persona Saved successfully!')
 
 
-col6.subheader('Persona related Images')
-if col6.button('Generate Persona Image'):
-    cols = col6.columns(3)
-    imagePrompt = f"a photo of how the following person might look like in person: {st.session_state.persona}"
-    image = openai.Image.create(
-    prompt=imagePrompt,
-    n=3,
-    size="256x256"
-    )
-    for i, item in enumerate(image["data"]):
-        cols[i].image(item["url"],width=100)
+    col6.subheader('Persona related Images')
+    if col6.button('Generate Persona Image'):
+        cols = col6.columns(3)
+        imagePrompt = f"a photo of how the following person might look like in person: {st.session_state.persona}"
+        image = openai.Image.create(
+        prompt=imagePrompt,
+        n=3,
+        size="256x256"
+        )
+        for i, item in enumerate(image["data"]):
+            cols[i].image(item["url"],width=100)
+
+
 
 
 
