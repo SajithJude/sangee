@@ -57,7 +57,7 @@ st.title('AI-Powered Persona Generation Tool')
 
 section1 , section2 = st.columns(2, gap="large")
 
-user_input = section1.radio('Please select an option:', ['Upload File', 'Manually Type'],horizontal=True)
+user_input = section1.radio('Please select an option:', ['Upload File', 'Manual Input'],horizontal=True)
 
 if user_input == 'Upload File':
 
@@ -139,39 +139,40 @@ if user_input == 'Upload File':
         product_cost = col1.text_input('Product Cost', value=response_json['Product Cost'])
         # product_cost = col4.number_input('Product Cost', format="%f", value=0.0 if response_json['Product Cost'] == 'N/A' else float(response_json['Product Cost']))
         competitive_products = col4.text_area('Competitive Products', max_chars=250, value=response_json['Competitive Products'])
-        nickname = col5.text_input('Nickname for the persona', value='John Doe')
-
-        if col5.button('Generate Persona'):
-
-            persona_prompt = f"Generate a persona for the user who is a {role} in the {industry} industry. They work for a company with approximately {company_size} employees. The company is described as follows: {company_description}. They have a client base of around {client_base_size} clients, operating in the following industries: {client_base_industries}. Their current problems include: {problems}. Their goals are: {goals}. The user is {age} years old, located in {location}, and identifies as a {user_type}. They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. They face competition from the following products: {competitive_products}."
-            if "persona_prompt" not in st.session_state:
-                st.session_state.persona_prompt= persona_prompt
-
-            persona = generate_persona(persona_prompt)
-            if persona not in st.session_state:
-                st.session_state.persona = persona
-            personas[nickname] = persona
-
-            with open("db.json", "w") as f:
-                json.dump(personas, f)
-
-            section1.write(persona)
-            section1.success('Persona Saved successfully!')
-
-
-        col6.subheader('Persona related Images')
-        if col6.button('Generate Persona Image'):
-            cols = col6.columns(3)
-            imagePrompt = f"a photo of how the following person might look like in person: {st.session_state.persona}"
-            image = openai.Image.create(
-            prompt=imagePrompt,
-            n=3,
-            size="256x256"
-            )
-            for i, item in enumerate(image["data"]):
-                cols[i].image(item["url"],width=100)
         
-else:
+        # nickname = col5.text_input('Nickname for the persona', value='John Doe')
+
+        # if col5.button('Generate Persona'):
+
+        #     persona_prompt = f"Generate a persona for the user who is a {role} in the {industry} industry. They work for a company with approximately {company_size} employees. The company is described as follows: {company_description}. They have a client base of around {client_base_size} clients, operating in the following industries: {client_base_industries}. Their current problems include: {problems}. Their goals are: {goals}. The user is {age} years old, located in {location}, and identifies as a {user_type}. They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. They face competition from the following products: {competitive_products}."
+        #     if "persona_prompt" not in st.session_state:
+        #         st.session_state.persona_prompt= persona_prompt
+
+        #     persona = generate_persona(persona_prompt)
+        #     if persona not in st.session_state:
+        #         st.session_state.persona = persona
+        #     personas[nickname] = persona
+
+        #     with open("db.json", "w") as f:
+        #         json.dump(personas, f) 
+
+        #     section1.write(persona)
+        #     section1.success('Persona Saved successfully!')
+
+
+        # col6.subheader('Persona related Images')
+        # if col6.button('Generate Persona Image'):
+        #     cols = col6.columns(3)
+        #     imagePrompt = f"a photo of how the following person might look like in person: {st.session_state.persona}"
+        #     image = openai.Image.create(
+        #     prompt=imagePrompt,
+        #     n=3,
+        #     size="256x256"
+        #     )
+        #     for i, item in enumerate(image["data"]):
+        #         cols[i].image(item["url"],width=100)
+        
+elif user_input == 'Manual Input':
 
     context = section1.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
     col1,  col3, context_tab, col4, col5 ,col6= section1.tabs(["Demographics","Company","Additional Context","Product","Generate","Pictures"])
@@ -202,81 +203,81 @@ else:
     product_cost = col4.number_input('Product Cost', format="%f", value=50.0)
     competitive_products = col4.text_area('Competitive Products', max_chars=250, value='Competitor Product A, Competitor Product B')
 
-    nickname = col5.text_input('Nickname for the persona', value='John Doe')
+nickname = col5.text_input('Nickname for the persona', value='John Doe')
 
-    if col5.button('Generate Persona'):
+if col5.button('Generate Persona'):
 
-        persona_prompt = f"Generate a persona for the user who is a {role} in the {industry} industry. They work for a company with approximately {company_size} employees. The company is described as follows: {company_description}. They have a client base of around {client_base_size} clients, operating in the following industries: {client_base_industries}. Their current problems include: {problems}. Their goals are: {goals}. The user is {age} years old, located in {location}, and identifies as a {user_type}. They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. They face competition from the following products: {competitive_products}."
-        if "persona_prompt" not in st.session_state:
-            st.session_state.persona_prompt= persona_prompt
+    persona_prompt = f"Generate a persona for the user who is a {role} in the {industry} industry. They work for a company with approximately {company_size} employees. The company is described as follows: {company_description}. They have a client base of around {client_base_size} clients, operating in the following industries: {client_base_industries}. Their current problems include: {problems}. Their goals are: {goals}. The user is {age} years old, located in {location}, and identifies as a {user_type}. They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. They face competition from the following products: {competitive_products}."
+    if "persona_prompt" not in st.session_state:
+        st.session_state.persona_prompt= persona_prompt
 
-        persona = generate_persona(persona_prompt)
-        if persona not in st.session_state:
-            st.session_state.persona = persona
-        personas[nickname] = persona
+    persona = generate_persona(persona_prompt)
+    if persona not in st.session_state:
+        st.session_state.persona = persona
+    personas[nickname] = persona
+
+    with open("db.json", "w") as f:
+        json.dump(personas, f)
+
+    section1.write(persona)
+    section1.success('Persona Saved successfully!')
+
+
+col6.subheader('Persona related Images')
+if col6.button('Generate Persona Image'):
+    cols = col6.columns(3)
+    imagePrompt = f"a photo of how the following person might look like in person: {st.session_state.persona}"
+    image = openai.Image.create(
+    prompt=imagePrompt,
+    n=3,
+    size="256x256"
+    )
+    for i, item in enumerate(image["data"]):
+        cols[i].image(item["url"],width=100)
+
+
+
+# Display the available personas in a dropdown1
+# if personas:
+selected_persona = section2.selectbox("Select a persona to display", options=list(personas.keys()))
+old = section2.expander("Persona")
+
+persona_option = section2.radio('what do you wanna do with this persona:', ['edit', 'chat'],horizontal=True)
+
+if persona_option == "edit" and selected_persona in personas:
+    persona_edit_prompt = section2.text_area("What new information do you have about this persona?")
+    edit_persona = section2.button("Edit Persona")
+    old.write(personas[selected_persona])
+    if edit_persona:
+        edit_prompt= f"Evolve the following persona : {personas[selected_persona]}\n based on the new information obtained which is given bellow\n  new_information : {persona_edit_prompt}"
+        edited_persona= generate_persona(edit_prompt)
+        section2.write(edited_persona)
+
+        personas[nickname] = edited_persona
 
         with open("db.json", "w") as f:
             json.dump(personas, f)
+        section2.success('Persona Edited and saved successfully!')
 
-        section1.write(persona)
-        section1.success('Persona Saved successfully!')
+elif persona_option == "chat":
+    chat_input = section2.text_input("What's your question?")
+    ask_button = section2.button("Ask")
 
+    # Create a string or list to hold the conversation if it doesn't exist
+    if 'conversation' not in st.session_state:
+        st.session_state.conversation = []
 
-    col6.subheader('Persona related Images')
-    if col6.button('Generate Persona Image'):
-        cols = col6.columns(3)
-        imagePrompt = f"a photo of how the following person might look like in person: {st.session_state.persona}"
-        image = openai.Image.create(
-        prompt=imagePrompt,
-        n=3,
-        size="256x256"
-        )
-        for i, item in enumerate(image["data"]):
-            cols[i].image(item["url"],width=100)
-
-
-
-    # Display the available personas in a dropdown1
-    # if personas:
-    selected_persona = section2.selectbox("Select a persona to display", options=list(personas.keys()))
-    old = section2.expander("Persona")
-
-    persona_option = section2.radio('what do you wanna do with this persona:', ['edit', 'chat'],horizontal=True)
-
-    if persona_option == "edit" and selected_persona in personas:
-        persona_edit_prompt = section2.text_area("What new information do you have about this persona?")
-        edit_persona = section2.button("Edit Persona")
-        old.write(personas[selected_persona])
-        if edit_persona:
-            edit_prompt= f"Evolve the following persona : {personas[selected_persona]}\n based on the new information obtained which is given bellow\n  new_information : {persona_edit_prompt}"
-            edited_persona= generate_persona(edit_prompt)
-            section2.write(edited_persona)
-
-            personas[nickname] = edited_persona
-
-            with open("db.json", "w") as f:
-                json.dump(personas, f)
-            section2.success('Persona Edited and saved successfully!')
-
-    elif persona_option == "chat":
-        chat_input = section2.text_input("What's your question?")
-        ask_button = section2.button("Ask")
-
-        # Create a string or list to hold the conversation if it doesn't exist
-        if 'conversation' not in st.session_state:
-            st.session_state.conversation = []
-
-        if ask_button:
-            reply = call_gpt4(chat_input, personas[selected_persona])
-            section2.info(reply)
-            # Append the user's question and the generated response to the conversation
-            st.session_state.conversation.append(('User', chat_input))
-            st.session_state.conversation.append(('Persona', reply))
-            # Display the conversation
-            for speaker, text in st.session_state.conversation:
-                pers = st.sidebar.expander("Persona")
-                if speaker == 'User':
-                    st.sidebar.write(f'{speaker}: {text}')
-                else:
-                    pers.write(text)
+    if ask_button:
+        reply = call_gpt4(chat_input, personas[selected_persona])
+        section2.info(reply)
+        # Append the user's question and the generated response to the conversation
+        st.session_state.conversation.append(('User', chat_input))
+        st.session_state.conversation.append(('Persona', reply))
+        # Display the conversation
+        for speaker, text in st.session_state.conversation:
+            pers = st.sidebar.expander("Persona")
+            if speaker == 'User':
+                st.sidebar.write(f'{speaker}: {text}')
+            else:
+                pers.write(text)
                
