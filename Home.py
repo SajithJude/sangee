@@ -88,8 +88,8 @@ if user_input == 'Upload File':
         save_uploaded_file(uploaded_file)
         section1.success("It would take a while to analyze and extract the fields, please wait..!")
 
-    # Create a button to create the index
-    # if st.button("Create Index"):
+        # Create a button to create the index
+        # if st.button("Create Index"):
         # Get the filename of the uploaded PDF
         pdf_filename = uploaded_file.name
 
@@ -110,8 +110,9 @@ if user_input == 'Upload File':
 
     if section1.button("Populate Values"):
         
-        context = section1.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
         col1,  col3, context_tab, col4,col5 ,col6= section1.tabs(["Demographics","Company","Additional Context","Product","Generate","Pictures"])
+        context = context_tab.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
+
 
         age = col1.text_input('Location', value=response_json['Age'])
         # age = col1.slider('Age', min_value=0, max_value=120, step=1, value=int(response_json['Age']) if response_json['Age'].isdigit() else 0)
