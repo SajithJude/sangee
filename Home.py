@@ -70,7 +70,7 @@ format = """{
 
 # Check if a file was uploaded
 if uploaded_file is not None:
-    # Save the uploaded file to the data directory
+    # Save the uploaded file to the data directorya
     save_uploaded_file(uploaded_file, DATA_DIR)
     st.success("It would take a while to index the books, please wait..!")
 
