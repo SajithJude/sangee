@@ -62,21 +62,21 @@ user_input = section1.radio('Please select the context:', ['Uplod File', 'Manual
 uploaded_file = section1.file_uploader("Upload a PDF file", type="pdf")
 
 format = """{
-    'Age': age,
-    'Location': "location",
-    'Industry': "industry",
-    'Company Size': "company_size",
-    'Role': "role",
-    'Company Description': "Company Description",
-    'Size of Current Client Base': "size of Current Client Base",
-    'Industries of Client Base': "Industries of Client Base",
-    'Problems': "Problems",
-    'Goal': "Goal",
-    'User Type': "User Type",
-    'Product Name': "Product Name",
-    'Product Description': "Product Description",
-    'Product Cost': "Product Cost",
-    'Competitive Products' : "Competitive Products" 
+    "Age": "age",
+    "Location": "location",
+    "Industry": "industry",
+    "Company Size": "company_size",
+    "Role": "role",
+    "Company Description": "Company Description",
+    "Size of Current Client Base": "size of Current Client Base",
+    "Industries of Client Base": "Industries of Client Base",
+    "Problems": "Problems",
+    "Goal": "Goal",
+    "User Type": "User Type",
+    "Product Name": "Product Name",
+    "Product Description": "Product Description",
+    "Product Cost": "Product Cost",
+    "Competitive Products" : "Competitive Products" 
 }"""
 
 # Check if a file was uploaded
