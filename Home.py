@@ -88,7 +88,7 @@ if uploaded_file is not None:
 
     response = index.query(f"Extract the following information and give the output as a valid JSON string in the specified format {format}")
 
-    st.write(response.response)
+    section1.write(response.response)
 
 context = section1.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
 col1,  col3, context_tab, col4,col5 ,col6= section1.tabs(["Demographics","Company","Additional Context","Product","Generate","Pictures"])
