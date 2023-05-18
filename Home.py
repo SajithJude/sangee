@@ -113,7 +113,7 @@ if col6.button('Generate Persona Image'):
 
 
 
-# Display the available personas in a dropdown
+# Display the available personas in a dropdown1
 # if personas:
 selected_persona = section2.selectbox("Select a persona to display", options=list(personas.keys()))
 old = section2.expander("Persona")
