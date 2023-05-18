@@ -5,13 +5,17 @@ import json
 
 from langchain import OpenAI
 
-from llama_index import GPTVectorStoreIndex, SimpleDirectoryReader , ServiceContext, LLMPredictor
+from llama_index import GPTVectorStoreIndex, SimpleDirectoryReader , ServiceContext, LLMPredictor, download_loader
 from llama_index import StorageContext, load_index_from_storage
+from pathlib import Path
 
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 st.set_page_config(page_title=None, page_icon=None, layout="wide", initial_sidebar_state="collapsed", menu_items=None)
+DATA_DIR = "data"
 
+PDFReader = download_loader("PDFReader")
+loader = PDFReader()
 
 def call_gpt4(inpt,source):
     if "mssages" not in st.session_state:
@@ -24,6 +28,10 @@ def call_gpt4(inpt,source):
         messages = st.session_state.mssages
     )
     return response.choices[0].message['content']
+
+def save_uploaded_file(uploaded_file):
+    with open(os.path.join(DATA_DIR, uploaded_file.name), "wb") as f:
+        f.write(uploaded_file.getbuffer())
 
 
 
@@ -49,6 +57,39 @@ st.title('AI-Powered Persona Generation Tool')
 
 section1 , section2 = st.columns(2, gap="large")
 
+
+uploaded_file = st.file_uploader("Upload a PDF file", type="pdf")
+
+format = """{
+    'Age': age,
+    'Location': location,
+    'Industry': industry,
+    'Company Size': company_size,
+    'Role': role
+}"""
+
+# Check if a file was uploaded
+if uploaded_file is not None:
+    # Save the uploaded file to the data directorya
+    save_uploaded_file(uploaded_file)
+    st.success("It would take a while to index the books, please wait..!")
+
+# Create a button to create the index
+# if st.button("Create Index"):
+    # Get the filename of the uploaded PDF
+    pdf_filename = uploaded_file.name
+
+    # Load the documents from the data directory
+    documents = loader.load_data(
+        file=Path(f"{os.path.join(DATA_DIR, uploaded_file.name)}"))
+
+    # Create the index from the documents
+    index = GPTVectorStoreIndex.from_documents(documents)
+    index = index.as_query_engine()
+
+    response = index.query(f"Extract the following information and give the output as a valid JSON string in the specified format {format}")
+
+    section1.write(response.response)
 
 context = section1.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
 col1,  col3, context_tab, col4,col5 ,col6= section1.tabs(["Demographics","Company","Additional Context","Product","Generate","Pictures"])
@@ -113,7 +154,7 @@ if col6.button('Generate Persona Image'):
 
 
 
-# Display the available personas in a dropdown
+# Display the available personas in a dropdown1
 # if personas:
 selected_persona = section2.selectbox("Select a persona to display", options=list(personas.keys()))
 old = section2.expander("Persona")
