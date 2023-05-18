@@ -143,6 +143,7 @@ if user_input == 'Upload File':
         if col5.button('Generate Persona'):
 
             persona_prompt = f"Generate a persona for the user who is a {role} in the {industry} industry. They work for a company with approximately {company_size} employees. The company is described as follows: {company_description}. They have a client base of around {client_base_size} clients, operating in the following industries: {client_base_industries}. Their current problems include: {problems}. Their goals are: {goals}. The user is {age} years old, located in {location}, and identifies as a {user_type}. They are responsible for the product named {product_name}, which costs approximately {product_cost} and can be described as follows: {product_description}. They face competition from the following products: {competitive_products}."
+            col5.write(persona_prompt)
             if "persona_prompt" not in st.session_state:
                 st.session_state.persona_prompt= persona_prompt
 
@@ -171,7 +172,7 @@ if user_input == 'Upload File':
                 cols[i].image(item["url"],width=100)
 
     else:
-        section1.write("No Files to Populate")
+        section1.write("")
         
 elif user_input == 'Manual Input':
 
