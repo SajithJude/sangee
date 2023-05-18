@@ -85,6 +85,7 @@ if uploaded_file is not None:
 
     # Create the index from the documents
     index = GPTVectorStoreIndex.from_documents(documents)
+    index = index.as_query_engine()
 
     response = index.query(f"Extract the following information and give the output as a valid JSON string in the specified format {format}")
 
