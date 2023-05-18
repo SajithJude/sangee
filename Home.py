@@ -57,8 +57,9 @@ st.title('AI-Powered Persona Generation Tool')
 
 section1 , section2 = st.columns(2, gap="large")
 
+user_input = section1.radio('Please select the context:', ['Uplod File', 'Manually Type'],horizontal=True)
 
-uploaded_file = st.file_uploader("Upload a PDF file", type="pdf")
+uploaded_file = section1.file_uploader("Upload a PDF file", type="pdf")
 
 format = """{
     'Age': age,
@@ -66,12 +67,16 @@ format = """{
     'Industry': industry,
     'Company Size': company_size,
     'Role': role,
-    'Company Description' : 'A leading software company.',
-    'Size of Current Client Base' : 100,
-    'Industries of Client Base' : 'Software, Information Technology',
-    'Problems': 'Problem 1, Problem 2',,
-    'Goal' : 'Goal 1, Goal 2',
-    'User Type' : 'Sheep or Pioneer'
+    'Company Description': 'Company Description.',
+    'Size of Current Client Base': 'ize of Current Client Base',
+    'Industries of Client Base': 'Industries of Client Base',
+    'Problems': 'Problems',
+    'Goal': 'Goal',
+    'User Type': 'User Type',
+    'Product Name': 'Product Name',
+    'Product Description': 'Product Description',
+    'Product Cost': 'Product Cost',
+    'Competitive Products' : 'Competitive Products' 
 }"""
 
 # Check if a file was uploaded
@@ -95,7 +100,10 @@ if uploaded_file is not None:
 
     response = index.query(f"Extract the following information and give the output as a valid JSON string in the specified format {format}")
 
-    section1.write(response.response)
+    response_json = json.load(response.response)
+
+
+    section1.write(response_json)
 
 context = section1.radio('Please select the context:', ['B2B', 'B2C'],horizontal=True)
 col1,  col3, context_tab, col4,col5 ,col6= section1.tabs(["Demographics","Company","Additional Context","Product","Generate","Pictures"])
